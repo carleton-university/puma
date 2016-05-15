@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="ca.carleton.sce.puma.CSM.presentation.CSMModelWizardID"
+            name="%_UI_CSMModelWizard_label"
+            class="ca.carleton.sce.puma.CSM.presentation.CSMModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/CSMModelFile.gif">
+         <description>%_UI_CSMModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="ca.carleton.sce.puma.CSM.presentation.CSMEditorID"
+            name="%_UI_CSMEditor_label"
+            icon="icons/full/obj16/CSMModelFile.gif"
+            extensions="csm"
+            class="ca.carleton.sce.puma.CSM.presentation.CSMEditor"
+            contributorClass="ca.carleton.sce.puma.CSM.presentation.CSMActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#/"
+    outputs="CSM.ecore#/" topToBottom="true">
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//ID;XSDSimpleTypeDefinition=37"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//ID"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSMElementType;XSDComplexTypeDefinition=7"
+      outputs="CSM.ecore#//CSMElementType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSMElementType;XSDComplexTypeDefinition=7/XSDAttributeUse"
+        outputs="CSM.ecore#//CSMElementType/description"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSMElementType;XSDComplexTypeDefinition=7/XSDAttributeUse=1"
+        outputs="CSM.ecore#//CSMElementType/id"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSMElementType;XSDComplexTypeDefinition=7/XSDAttributeUse=2"
+        outputs="CSM.ecore#//CSMElementType/name"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSMElementType;XSDComplexTypeDefinition=7/XSDAttributeUse=3"
+        outputs="CSM.ecore#//CSMElementType/traceabilityLink"/>
+  </nested>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//IDREFS;XSDSimpleTypeDefinition=31"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//IDREFS"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//GeneralResourceType;XSDComplexTypeDefinition=13"
+      outputs="CSM.ecore#//GeneralResourceType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//GeneralResourceType;XSDComplexTypeDefinition=13/XSDAttributeUse"
+        outputs="CSM.ecore#//GeneralResourceType/multiplicity"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//GeneralResourceType;XSDComplexTypeDefinition=13/XSDAttributeUse=1"
+        outputs="CSM.ecore#//GeneralResourceType/perfMeasure"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//GeneralResourceType;XSDComplexTypeDefinition=13/XSDAttributeUse=2"
+        outputs="CSM.ecore#//GeneralResourceType/schedPolicy"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ActiveResourceType;XSDComplexTypeDefinition"
+      outputs="CSM.ecore#//ActiveResourceType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ActiveResourceType;XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="CSM.ecore#//ActiveResourceType/opTime"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ArrivalProcess;XSDSimpleTypeDefinition"
+      outputs="CSM.ecore#//ArrivalProcess">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ArrivalProcess;XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="CSM.ecore#//ArrivalProcess/poissonPDF"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ArrivalProcess;XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//ArrivalProcess/periodic"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ArrivalProcess;XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="CSM.ecore#//ArrivalProcess/uniform"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ArrivalProcess;XSDSimpleTypeDefinition/XSDEnumerationFacet=3"
+        outputs="CSM.ecore#//ArrivalProcess/phaseType"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioElementType;XSDComplexTypeDefinition=32"
+      outputs="CSM.ecore#//ScenarioElementType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioElementType;XSDComplexTypeDefinition=32/XSDAttributeUse"
+        outputs="CSM.ecore#//ScenarioElementType/description"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioElementType;XSDComplexTypeDefinition=32/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ScenarioElementType/id"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioElementType;XSDComplexTypeDefinition=32/XSDAttributeUse=2"
+        outputs="CSM.ecore#//ScenarioElementType/traceabilityLink"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ConstraintType;XSDComplexTypeDefinition=5"
+      outputs="CSM.ecore#//ConstraintType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ConstraintType;XSDComplexTypeDefinition=5/XSDAttributeUse"
+        outputs="CSM.ecore#//ConstraintType/expression"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PreConditionType;XSDComplexTypeDefinition=27"
+      outputs="CSM.ecore#//PreConditionType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PostConditionType;XSDComplexTypeDefinition=26"
+      outputs="CSM.ecore#//PostConditionType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InputSetType;XSDComplexTypeDefinition=15"
+      outputs="CSM.ecore#//InputSetType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InputSetType;XSDComplexTypeDefinition=15/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//InputSetType/preCondition"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InputSetType;XSDComplexTypeDefinition=15/XSDAttributeUse"
+        outputs="CSM.ecore#//InputSetType/predecessorSubset"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutputSetType;XSDComplexTypeDefinition=21"
+      outputs="CSM.ecore#//OutputSetType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutputSetType;XSDComplexTypeDefinition=21/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//OutputSetType/postCondition"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutputSetType;XSDComplexTypeDefinition=21/XSDAttributeUse"
+        outputs="CSM.ecore#//OutputSetType/successorSubset"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceAcquireType;XSDComplexTypeDefinition=30"
+      outputs="CSM.ecore#//ResourceAcquireType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceAcquireType;XSDComplexTypeDefinition=30/XSDAttributeUse"
+        outputs="CSM.ecore#//ResourceAcquireType/acquire"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceAcquireType;XSDComplexTypeDefinition=30/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ResourceAcquireType/priority"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceAcquireType;XSDComplexTypeDefinition=30/XSDAttributeUse=2"
+        outputs="CSM.ecore#//ResourceAcquireType/rUnits"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceReleaseType;XSDComplexTypeDefinition=31"
+      outputs="CSM.ecore#//ResourceReleaseType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceReleaseType;XSDComplexTypeDefinition=31/XSDAttributeUse"
+        outputs="CSM.ecore#//ResourceReleaseType/release"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourceReleaseType;XSDComplexTypeDefinition=31/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ResourceReleaseType/rUnits"/>
+  </nested>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//IDREF;XSDSimpleTypeDefinition=38"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//IDREF"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ClassifierType;XSDComplexTypeDefinition=2"
+      outputs="CSM.ecore#//ClassifierType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ClassifierType;XSDComplexTypeDefinition=2/XSDAttributeUse"
+        outputs="CSM.ecore#//ClassifierType/name"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23"
+      outputs="CSM.ecore#//PathConnectionType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23/XSDAttributeUse"
+        outputs="CSM.ecore#//PathConnectionType/classifier"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23/XSDAttributeUse=1"
+        outputs="CSM.ecore#//PathConnectionType/source"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23/XSDAttributeUse=2"
+        outputs="CSM.ecore#//PathConnectionType/subIn"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23/XSDAttributeUse=3"
+        outputs="CSM.ecore#//PathConnectionType/subOut"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PathConnectionType;XSDComplexTypeDefinition=23/XSDAttributeUse=4"
+        outputs="CSM.ecore#//PathConnectionType/target"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38"
+      outputs="CSM.ecore#//WorkloadType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse"
+        outputs="CSM.ecore#//WorkloadType/arrivalParam1"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=1"
+        outputs="CSM.ecore#//WorkloadType/arrivalParam2"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=2"
+        outputs="CSM.ecore#//WorkloadType/arrivalPattern"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=3"
+        outputs="CSM.ecore#//WorkloadType/coeffVarSq"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=4"
+        outputs="CSM.ecore#//WorkloadType/description"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=5"
+        outputs="CSM.ecore#//WorkloadType/externalDelay"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=6"
+        outputs="CSM.ecore#//WorkloadType/id"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=7"
+        outputs="CSM.ecore#//WorkloadType/responseTime"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=8"
+        outputs="CSM.ecore#//WorkloadType/traceabilityLink"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//WorkloadType;XSDComplexTypeDefinition=38/XSDAttributeUse=9"
+        outputs="CSM.ecore#//WorkloadType/value"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ClosedWorkloadType;XSDComplexTypeDefinition=3"
+      outputs="CSM.ecore#//ClosedWorkloadType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ClosedWorkloadType;XSDComplexTypeDefinition=3/XSDAttributeUse"
+        outputs="CSM.ecore#//ClosedWorkloadType/population"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OpenWorkloadType;XSDComplexTypeDefinition=19"
+      outputs="CSM.ecore#//OpenWorkloadType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StartType;XSDComplexTypeDefinition=35"
+      outputs="CSM.ecore#//StartType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StartType;XSDComplexTypeDefinition=35/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//StartType/closedWorkload"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StartType;XSDComplexTypeDefinition=35/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CSM.ecore#//StartType/openWorkload"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StartType;XSDComplexTypeDefinition=35/XSDAttributeUse"
+        outputs="CSM.ecore#//StartType/inBindingList"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InBindingType;XSDComplexTypeDefinition=14"
+      outputs="CSM.ecore#//InBindingType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InBindingType;XSDComplexTypeDefinition=14/XSDAttributeUse"
+        outputs="CSM.ecore#//InBindingType/in"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//InBindingType;XSDComplexTypeDefinition=14/XSDAttributeUse=1"
+        outputs="CSM.ecore#//InBindingType/start"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//EndType;XSDComplexTypeDefinition=9"
+      outputs="CSM.ecore#//EndType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//EndType;XSDComplexTypeDefinition=9/XSDAttributeUse"
+        outputs="CSM.ecore#//EndType/outBindingList"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutBindingType;XSDComplexTypeDefinition=20"
+      outputs="CSM.ecore#//OutBindingType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutBindingType;XSDComplexTypeDefinition=20/XSDAttributeUse"
+        outputs="CSM.ecore#//OutBindingType/end"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//OutBindingType;XSDComplexTypeDefinition=20/XSDAttributeUse=1"
+        outputs="CSM.ecore#//OutBindingType/out"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RoleBindingType;XSDComplexTypeDefinition=42"
+      outputs="CSM.ecore#//RoleBindingType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RoleBindingType;XSDComplexTypeDefinition=42/XSDAttributeUse"
+        outputs="CSM.ecore#//RoleBindingType/elementId"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RoleBindingType;XSDComplexTypeDefinition=42/XSDAttributeUse=1"
+        outputs="CSM.ecore#//RoleBindingType/elementName"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RoleBindingType;XSDComplexTypeDefinition=42/XSDAttributeUse=2"
+        outputs="CSM.ecore#//RoleBindingType/roleId"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RoleBindingType;XSDComplexTypeDefinition=42/XSDAttributeUse=3"
+        outputs="CSM.ecore#//RoleBindingType/roleName"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommStepType;XSDComplexTypeDefinition=37"
+      outputs="CSM.ecore#//CommStepType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommStepType;XSDComplexTypeDefinition=37/XSDAttributeUse"
+        outputs="CSM.ecore#//CommStepType/messageSize"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//SequenceType;XSDComplexTypeDefinition=34"
+      outputs="CSM.ecore#//SequenceType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//BranchType;XSDComplexTypeDefinition=1"
+      outputs="CSM.ecore#//BranchType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MergeType;XSDComplexTypeDefinition=17"
+      outputs="CSM.ecore#//MergeType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ForkType;XSDComplexTypeDefinition=12"
+      outputs="CSM.ecore#//ForkType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//JoinType;XSDComplexTypeDefinition=16"
+      outputs="CSM.ecore#//JoinType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MsgKind;XSDSimpleTypeDefinition=1"
+      outputs="CSM.ecore#//MsgKind">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MsgKind;XSDSimpleTypeDefinition=1/XSDEnumerationFacet"
+        outputs="CSM.ecore#//MsgKind/async"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MsgKind;XSDSimpleTypeDefinition=1/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//MsgKind/sync"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MsgKind;XSDSimpleTypeDefinition=1/XSDEnumerationFacet=2"
+        outputs="CSM.ecore#//MsgKind/reply"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MessageType;XSDComplexTypeDefinition=18"
+      outputs="CSM.ecore#//MessageType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MessageType;XSDComplexTypeDefinition=18/XSDAttributeUse"
+        outputs="CSM.ecore#//MessageType/kind"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MessageType;XSDComplexTypeDefinition=18/XSDAttributeUse=1"
+        outputs="CSM.ecore#//MessageType/multi"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//MessageType;XSDComplexTypeDefinition=18/XSDAttributeUse=2"
+        outputs="CSM.ecore#//MessageType/size"/>
+  </nested>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//boolean;XSDSimpleTypeDefinition=10"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33"
+      outputs="CSM.ecore#//ScenarioType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//ScenarioType/stepList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CSM.ecore#//ScenarioType/commStepList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CSM.ecore#//ScenarioType/resourceAcquireList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=3"
+        outputs="CSM.ecore#//ScenarioType/resourceReleaseList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=4"
+        outputs="CSM.ecore#//ScenarioType/startList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=5"
+        outputs="CSM.ecore#//ScenarioType/endList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=6"
+        outputs="CSM.ecore#//ScenarioType/sequenceList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=7"
+        outputs="CSM.ecore#//ScenarioType/branchList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=8"
+        outputs="CSM.ecore#//ScenarioType/mergeList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=9"
+        outputs="CSM.ecore#//ScenarioType/forkList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=10"
+        outputs="CSM.ecore#//ScenarioType/joinList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=11"
+        outputs="CSM.ecore#//ScenarioType/classifierList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle=12"
+        outputs="CSM.ecore#//ScenarioType/messageList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDAttributeUse"
+        outputs="CSM.ecore#//ScenarioType/probability"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ScenarioType/refinementList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ScenarioType;XSDComplexTypeDefinition=33/XSDAttributeUse=2"
+        outputs="CSM.ecore#//ScenarioType/transaction"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29"
+      outputs="CSM.ecore#//RefinementType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//RefinementType/inBindingList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CSM.ecore#//RefinementType/outBindingList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CSM.ecore#//RefinementType/roleBindingList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDAttributeUse"
+        outputs="CSM.ecore#//RefinementType/parent"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDAttributeUse=1"
+        outputs="CSM.ecore#//RefinementType/selectCondition"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//RefinementType;XSDComplexTypeDefinition=29/XSDAttributeUse=2"
+        outputs="CSM.ecore#//RefinementType/sub"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ExternalDemandType;XSDComplexTypeDefinition=10"
+      outputs="CSM.ecore#//ExternalDemandType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ExternalDemandType;XSDComplexTypeDefinition=10/XSDAttributeUse"
+        outputs="CSM.ecore#//ExternalDemandType/demand"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ExternalDemandType;XSDComplexTypeDefinition=10/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ExternalDemandType/extOp"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourcePassType;XSDComplexTypeDefinition=40"
+      outputs="CSM.ecore#//ResourcePassType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourcePassType;XSDComplexTypeDefinition=40/XSDAttributeUse"
+        outputs="CSM.ecore#//ResourcePassType/pass"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ResourcePassType;XSDComplexTypeDefinition=40/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ResourcePassType/rUnits"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PassiveResourceType;XSDComplexTypeDefinition=22"
+      outputs="CSM.ecore#//PassiveResourceType"/>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//int;XSDSimpleTypeDefinition=44"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Int"/>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//float;XSDSimpleTypeDefinition=11"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Float"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43"
+      outputs="CSM.ecore#//CommunicationLinkType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse=1"
+        outputs="CSM.ecore#//CommunicationLinkType/blockT"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse"
+        outputs="CSM.ecore#//CommunicationLinkType/capacity"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse=4"
+        outputs="CSM.ecore#//CommunicationLinkType/processingHost1"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse=5"
+        outputs="CSM.ecore#//CommunicationLinkType/processingHost2"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse=3"
+        outputs="CSM.ecore#//CommunicationLinkType/resMult"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CommunicationLinkType;XSDComplexTypeDefinition=43/XSDAttributeUse=2"
+        outputs="CSM.ecore#//CommunicationLinkType/speedFactor"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ProcessingResourceType;XSDComplexTypeDefinition=28"
+      outputs="CSM.ecore#//ProcessingResourceType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ProcessingResourceType;XSDComplexTypeDefinition=28/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//ProcessingResourceType/communicationLinkList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ProcessingResourceType;XSDComplexTypeDefinition=28/XSDAttributeUse=2"
+        outputs="CSM.ecore#//ProcessingResourceType/commRcvOvh"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ProcessingResourceType;XSDComplexTypeDefinition=28/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ProcessingResourceType/commTxOvh"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ProcessingResourceType;XSDComplexTypeDefinition=28/XSDAttributeUse"
+        outputs="CSM.ecore#//ProcessingResourceType/speedFactor"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ComponentType;XSDComplexTypeDefinition=4"
+      outputs="CSM.ecore#//ComponentType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ComponentType;XSDComplexTypeDefinition=4/XSDAttributeUse"
+        outputs="CSM.ecore#//ComponentType/host"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ComponentType;XSDComplexTypeDefinition=4/XSDAttributeUse=1"
+        outputs="CSM.ecore#//ComponentType/isActiveProcess"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ComponentType;XSDComplexTypeDefinition=4/XSDAttributeUse=2"
+        outputs="CSM.ecore#//ComponentType/parentComponent"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ComponentType;XSDComplexTypeDefinition=4/XSDAttributeUse=3"
+        outputs="CSM.ecore#//ComponentType/subComponents"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//SynchronizationKind;XSDSimpleTypeDefinition=5"
+      outputs="CSM.ecore#//SynchronizationKind">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//SynchronizationKind;XSDSimpleTypeDefinition=5/XSDEnumerationFacet"
+        outputs="CSM.ecore#//SynchronizationKind/false"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//SynchronizationKind;XSDSimpleTypeDefinition=5/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//SynchronizationKind/true"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36"
+      outputs="CSM.ecore#//StepType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//StepType/preCondition"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CSM.ecore#//StepType/postCondition"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CSM.ecore#//StepType/inputSetList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=3"
+        outputs="CSM.ecore#//StepType/outputSetList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=4"
+        outputs="CSM.ecore#//StepType/resourceAcquireList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=5"
+        outputs="CSM.ecore#//StepType/resourceReleaseList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=6"
+        outputs="CSM.ecore#//StepType/refinement"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=7"
+        outputs="CSM.ecore#//StepType/externalDemandList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=8"
+        outputs="CSM.ecore#//StepType/aspectStepList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=9"
+        outputs="CSM.ecore#//StepType/resourcePassList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=7"
+        outputs="CSM.ecore#//StepType/behaviorCount"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=3"
+        outputs="CSM.ecore#//StepType/blockT"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse"
+        outputs="CSM.ecore#//StepType/component"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=9"
+        outputs="CSM.ecore#//StepType/externalOpCount"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=8"
+        outputs="CSM.ecore#//StepType/externalOpDemand"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=2"
+        outputs="CSM.ecore#//StepType/hostDemand"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=1"
+        outputs="CSM.ecore#//StepType/name"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=11"
+        outputs="CSM.ecore#//StepType/nosync"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=12"
+        outputs="CSM.ecore#//StepType/perfMeasureEnd"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=13"
+        outputs="CSM.ecore#//StepType/perfMeasureTrigger"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=14"
+        outputs="CSM.ecore#//StepType/predecessor"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=4"
+        outputs="CSM.ecore#//StepType/probability"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=5"
+        outputs="CSM.ecore#//StepType/repetitionCount"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=10"
+        outputs="CSM.ecore#//StepType/respT"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=6"
+        outputs="CSM.ecore#//StepType/serviceCount"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//StepType;XSDComplexTypeDefinition=36/XSDAttributeUse=15"
+        outputs="CSM.ecore#//StepType/successor"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//AspectStepType;XSDComplexTypeDefinition=39"
+      outputs="CSM.ecore#//AspectStepType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//AspectStepType;XSDComplexTypeDefinition=39/XSDAttributeUse"
+        outputs="CSM.ecore#//AspectStepType/aspectDefinition"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//ExternalOperationType;XSDComplexTypeDefinition=11"
+      outputs="CSM.ecore#//ExternalOperationType"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3"
+      outputs="CSM.ecore#//PerfValueKind">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet"
+        outputs="CSM.ecore#//PerfValueKind/mean"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//PerfValueKind/variance"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=2"
+        outputs="CSM.ecore#//PerfValueKind/percentile"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=3"
+        outputs="CSM.ecore#//PerfValueKind/moment"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=4"
+        outputs="CSM.ecore#//PerfValueKind/min"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=5"
+        outputs="CSM.ecore#//PerfValueKind/max"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueKind;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=6"
+        outputs="CSM.ecore#//PerfValueKind/distribution"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueSource;XSDSimpleTypeDefinition=4"
+      outputs="CSM.ecore#//PerfValueSource">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueSource;XSDSimpleTypeDefinition=4/XSDEnumerationFacet"
+        outputs="CSM.ecore#//PerfValueSource/required"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueSource;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//PerfValueSource/assumed"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueSource;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=2"
+        outputs="CSM.ecore#//PerfValueSource/predicted"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueSource;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=3"
+        outputs="CSM.ecore#//PerfValueSource/measured"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25"
+      outputs="CSM.ecore#//PerfValueType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25/XSDAttributeUse"
+        outputs="CSM.ecore#//PerfValueType/kind"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25/XSDAttributeUse=1"
+        outputs="CSM.ecore#//PerfValueType/kthMoment"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25/XSDAttributeUse=2"
+        outputs="CSM.ecore#//PerfValueType/percentile"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25/XSDAttributeUse=3"
+        outputs="CSM.ecore#//PerfValueType/source"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfValueType;XSDComplexTypeDefinition=25/XSDAttributeUse=4"
+        outputs="CSM.ecore#//PerfValueType/value"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2"
+      outputs="CSM.ecore#//PerfAttribute">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2/XSDEnumerationFacet"
+        outputs="CSM.ecore#//PerfAttribute/delay"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=1"
+        outputs="CSM.ecore#//PerfAttribute/throughput"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=2"
+        outputs="CSM.ecore#//PerfAttribute/utilization"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=3"
+        outputs="CSM.ecore#//PerfAttribute/interval"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfAttribute;XSDSimpleTypeDefinition=2/XSDEnumerationFacet=4"
+        outputs="CSM.ecore#//PerfAttribute/wait"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24"
+      outputs="CSM.ecore#//PerfMeasureType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//PerfMeasureType/perfValue"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDAttributeUse"
+        outputs="CSM.ecore#//PerfMeasureType/duration"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDAttributeUse=1"
+        outputs="CSM.ecore#//PerfMeasureType/end"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDAttributeUse=2"
+        outputs="CSM.ecore#//PerfMeasureType/measure"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDAttributeUse=3"
+        outputs="CSM.ecore#//PerfMeasureType/resource"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//PerfMeasureType;XSDComplexTypeDefinition=24/XSDAttributeUse=4"
+        outputs="CSM.ecore#//PerfMeasureType/trigger"/>
+  </nested>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//LogicalResourceType;XSDComplexTypeDefinition=41"
+      outputs="CSM.ecore#//LogicalResourceType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//LogicalResourceType;XSDComplexTypeDefinition=41/XSDAttributeUse"
+        outputs="CSM.ecore#//LogicalResourceType/nestedOnly"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//LogicalResourceType;XSDComplexTypeDefinition=41/XSDAttributeUse=1"
+        outputs="CSM.ecore#//LogicalResourceType/parent"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//LogicalResourceType;XSDComplexTypeDefinition=41/XSDAttributeUse=2"
+        outputs="CSM.ecore#//LogicalResourceType/sub"/>
+  </nested>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//dateTime;XSDSimpleTypeDefinition=15"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//DateTime"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6"
+      outputs="CSM.ecore#//CSMType">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//CSMType/scenarioList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CSM.ecore#//CSMType/passiveResourceList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CSM.ecore#//CSMType/componentList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=3"
+        outputs="CSM.ecore#//CSMType/activeResourceList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=4"
+        outputs="CSM.ecore#//CSMType/processingResourceList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=5"
+        outputs="CSM.ecore#//CSMType/communicationLinkList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=6"
+        outputs="CSM.ecore#//CSMType/externalOperationList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=7"
+        outputs="CSM.ecore#//CSMType/perfMeasureList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle=8"
+        outputs="CSM.ecore#//CSMType/logicalResourceList"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse"
+        outputs="CSM.ecore#//CSMType/author"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse=1"
+        outputs="CSM.ecore#//CSMType/created"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse=2"
+        outputs="CSM.ecore#//CSMType/description"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse=3"
+        outputs="CSM.ecore#//CSMType/name"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse=4"
+        outputs="CSM.ecore#//CSMType/traceabilityLink"/>
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSM;XSDComplexTypeDefinition=6/XSDAttributeUse=5"
+        outputs="CSM.ecore#//CSMType/version"/>
+  </nested>
+  <nested inputs="bundleentry://505.fwk1454304511/cache/www.w3.org/2001/XMLSchema.xsd#//anyType;XSDComplexTypeDefinition=28"
+      outputs="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+  <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSModel;XSDComplexTypeDefinition=8"
+      outputs="CSM.ecore#//DocumentRoot">
+    <nested inputs="file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd#//CSModel;XSDComplexTypeDefinition=8/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CSM.ecore#//DocumentRoot/cSM"/>
+  </nested>
+</xsd2ecore:XSD2EcoreMappingRoot>

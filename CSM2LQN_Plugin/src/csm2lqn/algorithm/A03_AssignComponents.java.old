@@ -1,0 +1,179 @@
+package csm2lqn.algorithm;
+
+import java.util.Stack;
+
+import ca.carleton.sce.puma.CSM.BranchType;
+import ca.carleton.sce.puma.CSM.ComponentType;
+import ca.carleton.sce.puma.CSM.EndType;
+import ca.carleton.sce.puma.CSM.ForkType;
+import ca.carleton.sce.puma.CSM.JoinType;
+import ca.carleton.sce.puma.CSM.MergeType;
+import ca.carleton.sce.puma.CSM.PathConnectionType;
+import ca.carleton.sce.puma.CSM.ResourceAcquireType;
+import ca.carleton.sce.puma.CSM.ResourcePassType;
+import ca.carleton.sce.puma.CSM.ResourceReleaseType;
+import ca.carleton.sce.puma.CSM.ScenarioType;
+import ca.carleton.sce.puma.CSM.SequenceType;
+import ca.carleton.sce.puma.CSM.StartType;
+import ca.carleton.sce.puma.CSM.StepType;
+import csm2lqn.utility.Csm2LqnLogger;
+import csm2lqn.wrapper.ScenarioTypeWrapper;
+
+/**
+ * 
+ * @author Jeevithan Muttulingam
+ * 
+ * This step assigns components before flattening is done in step 3. 
+ * We traverse through all scenarios element by element and assign the components to Steps,
+ * ResourceAquires, and ResourceReleases. 
+ *
+ */
+
+public class StepTwo_B {
+
+	ScenarioTypeWrapper scenarioTypeWrapper;
+	boolean enablestandardLogging = true; 
+	ComponentType currentComponent; 
+	Stack<ComponentType> componentStack = null;
+	ComponentType acquiredComponent = null;
+	ComponentType releasedComponent = null;
+	
+	public StepTwo_B(ScenarioTypeWrapper scenarioTypeWrapper, boolean enableLogging) 
+	{
+		this.scenarioTypeWrapper = scenarioTypeWrapper; 
+		enablestandardLogging = enableLogging; 
+	}
+
+	private void log(String msg){
+		log(msg, enablestandardLogging);
+	}
+	
+	private void log(String msg, boolean enable){
+		if (enable){
+			Csm2LqnLogger.getLogger().info(msg);
+		}
+		
+	}
+	
+	
+	public void assignComponents() 
+	{
+		//Start
+		StartType start = scenarioTypeWrapper.getScenarioType().getStartList().get(0); 
+		StepType step = start.getTarget().get(0); 
+		
+		traverseAStepType(step);
+	}
+	
+	private PathConnectionType traverseAStepType(StepType step) {
+		
+		PathConnectionType successor = step.getSuccessor();
+		
+		if (step.getId().equals("CS00010")){
+			System.out.println("We are here"); 
+		}
+		
+		if (step.getId().equals("ST00009")){
+			System.out.println("We are here"); 
+		}
+		
+		if (step instanceof ResourceAcquireType) {
+			if (((ResourceAcquireType) step).getAcquire() instanceof ComponentType) {
+				
+				currentComponent = (ComponentType) ((ResourceAcquireType) step).getAcquire(); 
+				step.setComponent(currentComponent);
+		
+			}
+		}
+		else if (step instanceof ResourceReleaseType) {
+			if (((ResourceReleaseType) step).getRelease() instanceof ComponentType) {
+				
+				currentComponent = (ComponentType) ((ResourceReleaseType) step).getRelease(); 
+
+				step.setComponent(currentComponent);
+				
+//				if (currentComponent != null){
+//					System.out.println("RR Current component is not null: "+ currentComponent.getName()); 
+//				}
+				
+			}
+		}
+		else if (step instanceof ResourcePassType) {
+			// step.setComponent(currentComponent);
+
+		}
+		else // StepType
+		{
+			if (step.getId().equals("ST00009")){
+				System.out.println("We are here"); 
+			}
+			
+			step.setComponent(currentComponent);
+			
+//			if (currentComponent != null){
+//				System.out.println("STEP Current component is not null: "+ currentComponent.getName()); 
+//			}
+			
+//			System.out.println("+++++++ Component: "+ step.getComponent().getName());
+			
+			//if this step has a sub-scenario, go in there and assign components there as well
+			if (step.getRefinement() != null){
+				ScenarioType subScenario = step.getRefinement().getSubScenario();
+				StartType start = subScenario.getStartList().get(0); 
+				StepType stepNew = start.getTarget().get(0); 
+				
+				traverseAStepType(stepNew);
+			}
+		}
+
+		 
+		
+
+		return traverseAPathConnectionType(successor);
+	}
+
+	private PathConnectionType traverseAPathConnectionType(PathConnectionType aPathConnection) {
+		if (aPathConnection instanceof StartType) {
+			throw new IllegalArgumentException("Start type shouldn't be here");
+		}
+		else if (aPathConnection instanceof EndType) {
+			// aPathConnection.setPathSegmentID(segmentId); //End doesn't have a
+			// segment id
+			return null;
+		}
+		else if (aPathConnection instanceof BranchType || aPathConnection instanceof ForkType) {
+			PathConnectionType aJoinOrMerge = null;
+			StepType nextStep = null;
+
+			// Traverse across each segment
+			for (StepType aStep : aPathConnection.getTarget()) {
+				PathConnectionType tmp = traverseAStepType(aStep);
+				if (tmp != null) {
+					aJoinOrMerge = tmp;
+				}
+			}
+
+			if (aJoinOrMerge != null) {
+				// at least one of the segment hit a merge (i.e. not all the
+				// segments ended with an EndType)
+				nextStep = aJoinOrMerge.getTarget().get(0);
+
+				return traverseAStepType(nextStep);
+			}
+			return null;
+
+		}
+		else if (aPathConnection instanceof SequenceType) {
+			// go to the next step
+			return traverseAStepType(aPathConnection.getTarget().get(0));
+		}
+		else if (aPathConnection instanceof MergeType || aPathConnection instanceof JoinType) {
+			// just return itself, the branch or fork that started the segment
+			// will take care of continuing to the next step.
+			return aPathConnection;
+		}
+
+		throw new IllegalArgumentException("Shouldn't have reached here");
+	}
+
+}

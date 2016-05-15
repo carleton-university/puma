@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="platform:/plugin/ca.carleton.sce.puma.csm/model/CSM.xsd"
+            class="ca.carleton.sce.puma.CSM.CSMPackage"
+            genModel="model/CSM.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="csm"
+            class="ca.carleton.sce.puma.CSM.util.CSMResourceFactoryImpl"/>
+   </extension>
+
+</plugin>

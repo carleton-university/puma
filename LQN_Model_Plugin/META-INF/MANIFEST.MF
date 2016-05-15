@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: LQN_Model_Plugin
+Bundle-SymbolicName: LQN_Model_Plugin
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: lqn_model_plugin.Activator
+Require-Bundle: org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: lqnModel,
+ lqnXML,
+ lqn_model_plugin

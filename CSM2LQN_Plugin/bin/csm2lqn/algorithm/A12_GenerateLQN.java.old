@@ -1,0 +1,769 @@
+package csm2lqn.algorithm;
+
+import java.util.HashMap;
+import java.util.Stack;
+import java.util.Vector;
+
+import lqnModel.Activity;
+import lqnModel.ActivitySequenceException;
+import lqnModel.Entry;
+import lqnModel.GenericCall;
+import lqnModel.Model;
+import lqnModel.Processor;
+import lqnModel.Task;
+
+import org.eclipse.emf.common.util.EList;
+
+import ca.carleton.sce.puma.CSM.BranchType;
+import ca.carleton.sce.puma.CSM.CSMType;
+import ca.carleton.sce.puma.CSM.CommStepType;
+import ca.carleton.sce.puma.CSM.ComponentType;
+import ca.carleton.sce.puma.CSM.EndType;
+import ca.carleton.sce.puma.CSM.ForkType;
+import ca.carleton.sce.puma.CSM.JoinType;
+import ca.carleton.sce.puma.CSM.MergeType;
+import ca.carleton.sce.puma.CSM.MessageType;
+import ca.carleton.sce.puma.CSM.MsgKind;
+import ca.carleton.sce.puma.CSM.PathConnectionType;
+import ca.carleton.sce.puma.CSM.ProcessingResourceType;
+import ca.carleton.sce.puma.CSM.ResourceAcquireType;
+import ca.carleton.sce.puma.CSM.ResourcePassType;
+import ca.carleton.sce.puma.CSM.ResourceReleaseType;
+import ca.carleton.sce.puma.CSM.SequenceType;
+import ca.carleton.sce.puma.CSM.StartType;
+import ca.carleton.sce.puma.CSM.StepType;
+import csm2lqn.utility.Constants;
+import csm2lqn.utility.Csm2LqnLogger;
+import csm2lqn.wrapper.ScenarioTypeWrapper;
+
+/**
+ * This step generates the LQN
+ *
+ */
+public class StepThirteen {
+	
+	HashMap<Task, TaskTracker> taskTrackerMap;  
+	HashMap<String, Processor> processorMap; //<ProcessingResourceId, Processor>
+	HashMap<String, Task> taskMap; //<ComponentId, Task>
+	
+	EList<ProcessingResourceType> processingResourceList;
+	EList<ComponentType> componentList;
+	EList<CommStepType> commStepsList; 
+	EList<StepType> stepsList; 
+	ScenarioTypeWrapper scenario;
+	boolean enablestandardLogging = true; //this turns on/off normal logger. All error logging are made regardless of this flag
+	
+	public StepThirteen(ScenarioTypeWrapper scenarioTypeWrapper, CSMType csmType, boolean enableLogging) 
+	{
+		this.processingResourceList = csmType.getProcessingResourceList(); 
+		this.componentList = csmType.getComponentList();
+		this.commStepsList = scenarioTypeWrapper.getAllCommStepTypes(); 
+		this.stepsList = scenarioTypeWrapper.getAllStepTypes(); 
+		this.scenario = scenarioTypeWrapper; 
+		enablestandardLogging = enableLogging;
+		
+		taskTrackerMap = new HashMap<>(); 
+		processorMap = new HashMap<>(); 
+		taskMap = new HashMap<>(); 
+	}
+	
+	private void log(String msg){
+		log(msg, enablestandardLogging);
+	}
+	
+	private void log(String msg, boolean enable){
+		if (enable){
+			Csm2LqnLogger.getLogger().info(msg);
+		}
+		
+	}
+	
+	public void generateLQN(){
+		
+		// create LQN object
+		Model lqn = new Model(); 
+		
+		// identify the ProcessingResources in the CSM and create corresponding processors in the LQN
+		
+		// the infinite processor is used as a host for components that do not have a host processor specified and for reference tasks
+		Processor lqnInfiniteProcessor = lqn.addProcessor("InfiniteProc");  
+				
+		for (ProcessingResourceType processingResource: processingResourceList){
+			if (processingResource == null){
+				continue; 
+			}
+			Processor lqnProcessor = lqn.addProcessor(processingResource.getName()+"_"+processingResource.getId()); 
+			lqnProcessor.setCpuRate(processingResource.getSpeedFactor());
+			processorMap.put(processingResource.getId(), lqnProcessor); 
+		}
+		
+		// identify the Components in the CSM and create corresponding tasks in the LQN
+		for(ComponentType component: componentList) {
+			
+			
+			  Task lqnTask = lqn.addTask(component.getName());
+			  if (component.getMultiplicity() == null){
+				  component.setMultiplicity("1"); 
+			  }
+			  lqnTask.setMultiServer(component.getMultiplicity()); 
+				   
+			  if(component.getHost() != null) {
+				  ProcessingResourceType csmProcessor = component.getHost(); 
+				  Processor lqnProcessor = lqn.getProcessor(csmProcessor.getName()+"_"+csmProcessor.getId()); 
+				  //TODO lqnProcessor could be null
+				  lqnProcessor.addTask( lqnTask );
+			      
+			  }
+			  else{
+				  lqnInfiniteProcessor.addTask(lqnTask);
+			  }
+			  
+			  taskMap.put(component.getId(), lqnTask); 
+			  TaskTracker lqnTaskTracker = new TaskTracker(); 
+			  taskTrackerMap.put(lqnTask, lqnTaskTracker); 
+		} 
+		
+		// identify the CommSteps in the CSM and create corresponding entries in the LQN
+		for (CommStepType commStep: commStepsList){
+			
+			
+			// only create entries for sync calls and async calls
+			// there are no entries for replies
+			if(commStep.getMsgKind() == MsgKind.ASYNC || commStep.getMsgKind() == MsgKind.SYNC ) {
+			    ComponentType receiverComponent = commStep.getRcvComp();
+			    if (commStep.getRcvComp() != null){
+			    	Task rcvTask = taskMap.get(receiverComponent.getId());
+				    if (rcvTask == null){
+				    	//it shouldn't be null.
+				    	log("rcvTask not found in taskMap for receiver component "+ receiverComponent.getId(), true); 
+				    }
+				    
+				    TaskTracker rcvTaskTracker = taskTrackerMap.get(rcvTask);
+				    
+				    Entry rcvEntry = lqn.addEntry( "E_" + commStep.getId());
+				    rcvEntry.setTask(rcvTask);
+				    log("Added entry "+ rcvEntry.getName() + " to task " + rcvTask.getName()); 
+				    
+				    rcvTaskTracker.setEntry(commStep.getId(), rcvEntry );
+				}
+			}
+		}
+		
+		// identify the regular Steps in the CSM and create corresponding activities in the LQN
+		for(StepType step : stepsList) {
+		  // only create activities for regular steps
+		  // there are no activities for CommSteps, ResourceAcquires, ResourceReleases, or ResourcePasses
+		  if( step instanceof CommStepType  || step instanceof ResourceAcquireType  || step instanceof ResourceReleaseType  || step instanceof ResourcePassType ) {
+		    // do nothing
+		  }
+		  else {//for just the Step
+			  
+		      ComponentType stepComponent = step.getComponent();
+		      
+		      Task activityTask = taskMap.get(stepComponent.getId());
+		      
+		      Activity lqnActivity = new Activity(step.getName(), activityTask);
+		      lqnActivity.setServiceTime(new Float(step.getHostDemand()));
+		      lqnActivity.setRepeat(Double.parseDouble(step.getRepetitionCount())); //set the repetition count
+		      activityTask.addActivity( lqnActivity ); 
+
+		      TaskTracker activityTaskTracker = taskTrackerMap.get( activityTask );
+		      activityTaskTracker.setActivity(step.getId(), lqnActivity );
+		    }
+		  }
+		
+		
+		// traverse CSM Scenarios and connect LQN Entries and LQN Activities
+		
+		StartType start = scenario.getScenarioType().getStartList().get(0); 
+		if (start.getClosedWorkload() != null || start.getOpenWorkload() != null){
+			
+			// the current scenarios is a top-level scenario
+			// use the environment task as the reference task
+			Task lqnRefTask = taskMap.get(Constants.ENVIRONMENT_COMPONENT_ID);  
+			
+		    
+			// create a LQN reference entry with the name of the start point
+			Entry lqnRefEntry = lqn.addEntry("RefE_"+start.getId());
+			lqnRefEntry.setTask(lqnRefTask);
+			log("Added entry "+ lqnRefEntry.getName() + " to task " + lqnRefTask.getName());
+			TaskTracker txTaskTracker = taskTrackerMap.get(lqnRefTask);
+			
+			txTaskTracker.setEntry(Constants.REF_ENTRY_ID, lqnRefEntry);
+			txTaskTracker.setCurrentEntry(lqnRefEntry);
+			
+			
+			Activity lqnRefActivity = new Activity("RefA_" + start.getId(), lqnRefTask);
+			lqnRefTask.addActivity(lqnRefActivity);
+			lqnRefEntry.setStartActivity(lqnRefActivity);
+			log(lqnRefActivity.getName() + " set as first activity of "+ lqnRefEntry.getName());
+			lqnRefActivity.setBoundToEntry(lqnRefEntry.getId()); 
+			txTaskTracker.setLastTxActivity(lqnRefActivity);
+			
+			
+			Stack<Task> lqnTaskStack = new Stack<>(); 
+			
+//			lqnTaskStack.push(lqnRefTask); //this should be treated as a stack
+			
+			
+			Entry rcvEntry = null;
+			Task rcvTask = null; 
+			TaskTracker rcvTaskTracker = null; 
+			StepType step = start.getTarget().get(0);
+			
+			if (!step.getComponent().getId().equals(Constants.ENVIRONMENT_COMPONENT_ID)){
+				if (step instanceof CommStepType){
+					CommStepType commStep = (CommStepType) step; 
+					rcvTask = taskMap.get(commStep.getRcvComp().getId());  
+					rcvTaskTracker = taskTrackerMap.get(rcvTask);
+					
+					rcvEntry = lqn.addEntry( "RefRcvE_" + commStep.getId());
+				    rcvEntry.setTask(rcvTask);
+				    log("Added entry "+ rcvEntry.getName() + " to task " + rcvTask.getName()); 
+				    
+				    rcvTaskTracker.setEntry(start.getId(), rcvEntry);
+				    
+//				    Activity firstRcvActivity = new Activity("RefRcvA_"+commStep.getId(), rcvTask);
+//				    rcvTask.addActivity(firstRcvActivity);
+//					rcvEntry.setStartActivity(firstRcvActivity);
+//					log(firstRcvActivity.getName() + " set as first activity of "+ rcvEntry.getName());
+//					firstRcvActivity.setBoundToEntry(rcvEntry.getId()); 
+					
+				    if (commStep.getMsgKind() == MsgKind.SYNC){
+				    	lqnRefActivity.addCall(rcvEntry, true, "1.0");
+				    }
+				    else if (commStep.getMsgKind() == MsgKind.ASYNC){
+				    	lqnRefActivity.addCall(rcvEntry, false, "1.0");
+				    }
+				    else{
+				    	throw new IllegalStateException("First message for commStep "+ commStep.getId() + " should be SYNC or ASYNC");
+				    }
+				    
+					rcvTaskTracker.setCurrentEntry(rcvEntry);
+					
+				}
+				else{
+					rcvTask = taskMap.get(step.getComponent().getId());  
+					rcvTaskTracker = taskTrackerMap.get(rcvTask);
+					
+					rcvEntry = lqn.addEntry( "RefRcvE_" + step.getId());
+				    rcvEntry.setTask(rcvTask);
+				    log("Added entry "+ rcvEntry.getName() + " to task " + rcvTask.getName()); 
+				    
+				    rcvTaskTracker.setEntry(step.getId(), rcvEntry );
+				    
+				    //First step after start point is a regular step. Therefore, environment makes an ASYNC call.
+				    lqnRefActivity.addCall(rcvEntry, false, "1.0"); //call set as ASYNC
+					rcvTaskTracker.setCurrentEntry(rcvEntry);
+				}
+				
+				
+			}
+			
+			//print all the rcv entries:
+			System.out.println("Print all entries");
+			for (Task task: taskTrackerMap.keySet()){
+				System.out.println("Task: "+ task.getName());
+				for (Entry entry: taskTrackerMap.get(task).entryMap.values()){
+					System.out.println("  "+ entry.getId()); 
+				}
+			}
+			
+			//traverse scenario
+			traverseAStepType(step, lqnTaskStack);
+			
+			
+		}
+		
+		
+		//NOW Print the LQN Model
+		log("============================================\nGENERATED LQN", true);
+		System.out.println("Processors:");
+		for (Object p:lqn.getProcessors().values()){
+			System.out.println(((Processor)p).getName());
+		}
+		
+		
+		System.out.println("\nTasks:");
+		for (Object task:lqn.getTasks().values()){
+			System.out.println(((Task)task).getName());
+			
+			for (Object activity: ((Task)task).getActivities().values()){
+				Activity a = (Activity)activity;
+				System.out.println("  "+ a.getName());
+				System.out.println("      Prev:"+ a.getPrevConnection());
+				if (a.getPrevious() != null){
+					for (Object obj: a.getPrevious()){
+						Activity aa = (Activity)obj;
+						System.out.println("        "+aa.getName());
+					}
+				}
+				System.out.println("      Next:"+ a.getNextConnection());
+				if (a.getNext() != null){
+					for (Object obj: a.getNext()){
+						Activity aa = (Activity)obj;
+						System.out.println("        "+aa.getName());
+					}
+				}
+			}
+		}
+		
+		System.out.println("\nEntries:");
+		for (Object entry:lqn.getEntries().values()){
+			System.out.println("Task: "+ ((Entry)entry).getTask().getName() + ". Entry: "+((Entry)entry).getName());
+		}
+		
+		
+		log(lqn.toString());
+	}
+	
+	private PathConnectionType traverseAStepType(StepType step, Stack<Task> lqnTaskStack) {
+		
+		log("traversing step name "+ step.getName() + " with ID "+ step.getId());
+		if (step instanceof ResourceAcquireType){
+			//we don't do anything
+		}
+		else if (step instanceof ResourceReleaseType){
+			
+		}
+		else if (step instanceof CommStepType){
+			boolean setCallActivityConnections = false; 
+			boolean setReplyActivityConnections = false; 
+			Activity txActivity = null; 
+			Activity rcvActivity = null;
+			
+			CommStepType commStep = (CommStepType)step;
+			ComponentType txComp = commStep.getTxComp();
+			Task txTask = taskMap.get(txComp.getId());
+			TaskTracker txTaskTracker = taskTrackerMap.get(txTask);
+			Entry txEntry = txTaskTracker.getCurrentEntry();
+			
+			ComponentType rcvComp = commStep.getRcvComp(); 
+			Task rcvTask = taskMap.get(rcvComp.getId());
+			TaskTracker rcvTaskTracker = taskTrackerMap.get(rcvTask);
+			Entry rcvEntry = rcvTaskTracker.entryMap.get(commStep.getId());
+			
+            
+			if( commStep.getMsgKind() == MsgKind.ASYNC ) {
+	            // make async call from txTask to entry of rcvTask
+	            // add activity to txTask to send message
+	            txActivity = new Activity( "SendAsync_" + commStep.getId(), txTask); //callActivity
+	            txTask.addActivity( txActivity );
+	            txActivity.setBoundToEntry(txTaskTracker.getCurrentEntry().getId()); 
+	            txTaskTracker.setActivity(commStep.getId(), txActivity );
+	            txTaskTracker.setLastAddedActivity(txActivity);
+	            txTaskTracker.setLastTxActivity(txActivity);
+	            
+	            // make call to rcvEntry
+	            txActivity.addCall(rcvEntry, false, "1.0");
+
+	            rcvTaskTracker.setCurrentEntry(rcvEntry);
+//	            txTaskTracker.setLastTxActivity(txActivity);
+	            setCallActivityConnections = true; 
+			}
+			else if( commStep.getMsgKind() == MsgKind.SYNC ) {
+				// make sync call from txTask to entry of rcvTask
+	            // add activity to txTask to send message
+	            txActivity = new Activity( "SendSync_" + commStep.getId(), txTask);
+	            txTask.addActivity( txActivity);
+	            txActivity.setBoundToEntry(txEntry.getId()); 
+	            txTaskTracker.activityMap.put(commStep.getId(), txActivity );
+	            txTaskTracker.setLastAddedActivity(txActivity);
+	            txTaskTracker.setLastTxActivity(txActivity);
+	            
+	            // make call to rcvEntry
+	            txActivity.addCall( rcvEntry, true, "1.0" );
+	            rcvTaskTracker.setCurrentEntry(rcvEntry);
+	            
+	            setCallActivityConnections = true; 
+			}
+			else if( commStep.getMsgKind() == MsgKind.REPLY ) {
+				// reply from lastActivity of txTask to its entry
+	            // add activity to txTask to send the reply message
+	            txActivity = new Activity( "SendReply_" + commStep.getId(), txTask);
+	            txTask.addActivity( txActivity );
+	            txActivity.setBoundToEntry(txTaskTracker.getCurrentEntry().getId()); 
+	            txTaskTracker.activityMap.put(commStep.getId(), txActivity );
+	            txTaskTracker.setLastAddedActivity(txActivity);
+	            txTaskTracker.setLastTxActivity(txActivity);
+	            
+	            // make reply to entry
+	            Vector<String> replyEntries = new Vector<>();
+	            replyEntries.add(txActivity.getBoundToEntry());
+	            txActivity.setReplyEntries(replyEntries);
+	            
+	            //add activity to rcvTask to receive/accept the message
+	            rcvActivity = new Activity ("RcvReply_"+ commStep.getId(), rcvTask);
+	            rcvTask.addActivity(rcvActivity);
+	            rcvActivity.setBoundToEntry(rcvTaskTracker.getCurrentEntry().getId());
+	            rcvTaskTracker.activityMap.put(commStep.getId(), rcvActivity );
+	            rcvTaskTracker.setLastAddedActivity(rcvActivity);
+	            
+	            setReplyActivityConnections = true; 
+			}
+			else if( commStep.getMsgKind() == MsgKind.FWD) {
+				// make fwd call from lastActivity of txTask to new entry of rcvTask
+	            // add activity to txTask to send message
+	            txActivity = new Activity( "SendFwd_" + commStep.getId(), txTask);
+	            txTask.addActivity(txActivity);
+	            txActivity.setBoundToEntry(txTaskTracker.getCurrentEntry().getId()); 
+	            txTaskTracker.activityMap.put(commStep.getId(), txActivity);
+	            txTaskTracker.setLastAddedActivity(txActivity);
+	            txTaskTracker.setLastTxActivity(txActivity);
+	            
+	            // make call to rcvEntry
+	            txActivity.addCall(rcvEntry, true, "1.0");
+	            Vector callsOut = txActivity.getCallsOut();
+	            ((GenericCall)(callsOut.get(0))).setProbForwarding(1.0f);
+	            
+	            rcvTaskTracker.setCurrentEntry(rcvEntry);
+//	            txTaskTracker.setLastTxActivity(txActivity);
+	            setCallActivityConnections = true; 
+			}
+			
+			if (setCallActivityConnections){
+				if(txEntry.hasStartActivity()) {
+					log("+++++++++ set connections for commStep "+step.getId());
+					StepType lastTxStep = findPreviousRegularStep(commStep);
+					Activity lastTxActivity;
+					if (lastTxStep != null){
+						lastTxActivity = txTaskTracker.getActivity(lastTxStep.getId());
+					}
+					else{
+						lastTxActivity = txTaskTracker.getLastTxActivity(); 
+					}
+					
+					//sanity check
+		            if (!txTaskTracker.getCurrentEntry().getId().equals(lastTxActivity.getBoundToEntry())){
+		            	log("SEVERE: txTaskTracker.currentEntry is not the same as lastTxActivity.getBoundToEntry", true);
+		            	throw new IllegalStateException(); 
+		            }
+		            
+					try{
+						
+						if (lastTxStep != null){
+			        		// set the connections for the activity
+				        	if(lastTxStep.getSuccessor() instanceof SequenceType) {
+				        		lastTxActivity.addBasicConnection( txActivity );
+				        		log(lastTxActivity.getName() + " set NEXT connection to "+ txActivity.getName());
+				            }
+				            else if(lastTxStep.getSuccessor() instanceof ForkType) {
+				            	lastTxActivity.addANDForkActivity( txActivity );
+				            	log(lastTxActivity.getName() + " set AND FORK connection to "+ txActivity.getName());
+				            }
+				            else if(lastTxStep.getSuccessor() instanceof JoinType ) {
+				            	lastTxActivity.addANDJoinConnection( txActivity);
+				            	log(lastTxActivity.getName() + " set AND JOIN connection to "+ txActivity.getName());
+				            }
+				            else if(lastTxStep.getSuccessor() instanceof BranchType ) {
+				            	lastTxActivity.addORForkActivity(txActivity, Double.parseDouble(findImmediateNextStep(lastTxStep).getProbability()));
+				            	log(lastTxActivity.getName() + " set OR FORK connection to "+ txActivity.getName());
+				            }
+				            else if(lastTxStep.getSuccessor() instanceof MergeType ) {
+				            	lastTxActivity.addORJoinConnection( txActivity );
+				            	log(lastTxActivity.getName() + " set OR JOIN connection to "+ txActivity.getName());
+				            }
+						}
+						else{
+							//if there is no previous txStep, then connect in sequence
+							lastTxActivity.addBasicConnection( txActivity );
+							log(lastTxActivity.getName() + " set NEXT connection to "+ txActivity.getName());
+						}
+			        	
+		        	}
+		        	catch (ActivitySequenceException e){
+		        		e.printStackTrace(); 
+		        	}
+				}
+				else{
+					// set as first step for corresponding entry 
+		            rcvEntry.setStartActivity(rcvActivity);
+		            log(rcvActivity.getName() + " set as first activity of "+ rcvEntry.getName());
+				}
+				
+				//Set the current txActivity as the lastTxActivity for the txTask after all the connections have been made
+				txTaskTracker.setLastTxActivity(txActivity);
+			}
+			
+			if (setReplyActivityConnections){
+				log("---------------- set reply activity connections for commStep "+step.getId());
+				//TODO: 
+				connect sendReply Activity to prvious activity already added in the task. 
+				xx = ... 
+				
+				Activity lastTxActivityOnTheSender = txTaskTracker.getLastTxActivity();
+	            
+				try{
+					xx.addBasicConnection(lastTxActivityOnTheSender);
+					log(xx.getName() + " set NEXT connection to "+ txActivity.getName());
+	        	}
+	        	catch (ActivitySequenceException e){
+	        		e.printStackTrace(); 
+	        	}
+				
+				Activity lastTxActivityOnTheReceiver = rcvTaskTracker.getLastTxActivity();
+	            
+				try{
+					lastTxActivityOnTheReceiver.addBasicConnection(rcvActivity);
+					log(lastTxActivityOnTheReceiver.getName() + " set NEXT connection to "+ rcvActivity.getName());
+	        	}
+	        	catch (ActivitySequenceException e){
+	        		e.printStackTrace(); 
+	        	}
+				
+				
+			
+			}
+					
+		}
+		else if(step instanceof ResourcePassType){
+			
+		}
+		else{ //just the regular step
+//			if( lqnTaskStack.size() > 0 && step.getComponent().getName().equals( lqnTaskStack.peek().getName())) {
+					
+				StepType lastStep = findPreviousRegularStep(step);  
+				
+//				Task currentTask = lqnTaskStack.peek(); 
+				
+				//sanity check to see the current task is valid
+				ComponentType stepComponent = step.getComponent();
+				Task stepTask = taskMap.get(stepComponent.getId()); 
+//				if (!currentTask.equals(stepTask)){
+//					log("SEVERE: LQN Traversal error. stepTask does not match what's on the stack for step "+ step.getId(), true); 
+//					throw new IllegalStateException(); 
+//				}
+				
+				Entry currentEntry = taskTrackerMap.get(stepTask).getCurrentEntry(); 
+				
+				System.out.println("Printing all Activities for stepTask: "+ stepTask.getName());
+				taskTrackerMap.get(stepTask).printAllActivities();
+				System.out.println("Printing all Entries for stepTask: "+ stepTask.getName());
+				taskTrackerMap.get(stepTask).printAllEntries();
+				
+				Activity currentActivity = taskTrackerMap.get(stepTask).getActivity(step.getId()); 
+				currentActivity.setBoundToEntry( currentEntry.getId() );
+				
+						
+				// check that current entry already has a start activity
+		        if( currentEntry.hasStartActivity()) {
+//		        	Activity lastActivity = taskTrackerMap.get(stepTask).getActivity(lastStep.getId());
+		        	Activity lastActivity = taskTrackerMap.get(stepTask).getLastAddedActivity(); 
+		        	log("+++++++++ set connections for Step "+step.getId());
+		        	
+		        	try{
+		        		// set the connections for the activity
+			        	if(lastStep.getSuccessor() instanceof SequenceType) {
+			        		lastActivity.addBasicConnection( currentActivity );
+			        		log(lastActivity.getName() + " set NEXT connection to "+ currentActivity.getName());
+			            }
+			            else if(lastStep.getSuccessor() instanceof ForkType) {
+			              lastActivity.addANDForkActivity( currentActivity );
+			              log(lastActivity.getName() + " set AND FORK connection to "+ currentActivity.getName());
+			            }
+			            else if(lastStep.getSuccessor() instanceof JoinType ) {
+			              lastActivity.addANDJoinConnection( currentActivity );
+			              log(lastActivity.getName() + " set AND JOIN connection to "+ currentActivity.getName());
+			            }
+			            else if(lastStep.getSuccessor() instanceof BranchType ) {
+			              lastActivity.addORForkActivity(currentActivity, Double.parseDouble(step.getProbability()));
+			              log(lastActivity.getName() + " set OR FORK connection to "+ currentActivity.getName());
+			            }
+			            else if(lastStep.getSuccessor() instanceof MergeType ) {
+			              lastActivity.addORJoinConnection( currentActivity );
+			              log(lastActivity.getName() + " set OR JOIN connection to "+ currentActivity.getName());
+			            }
+		        	}
+		        	catch (ActivitySequenceException e){
+		        		e.printStackTrace(); 
+		        	}
+		            
+		        }
+		        // else activity corresponds to first step after sync/async call
+		        else {
+		        	// set as first step for corresponding entry 
+		            currentEntry.setStartActivity(currentActivity);
+		            log(currentActivity.getName() + " ******************* set as first activity of "+ currentEntry.getName());
+		        }
+//			}
+		}
+		
+		
+		PathConnectionType successor = step.getSuccessor();
+
+		return traverseAPathConnectionType(successor, lqnTaskStack);
+	}
+
+	private PathConnectionType traverseAPathConnectionType(PathConnectionType aPathConnection, Stack<Task> lqnTaskStack) {
+		
+		log("traversing pathconnection "+ aPathConnection.getId());
+		
+		if (aPathConnection instanceof StartType) {
+			throw new IllegalArgumentException("Start type shouldn't be here");
+		}
+		else if (aPathConnection instanceof EndType) {
+			
+			return null;
+		}
+		else if (aPathConnection instanceof BranchType || aPathConnection instanceof ForkType) {
+			PathConnectionType aJoinOrMerge = null;
+			StepType nextStep = null;
+			
+			// Traverse across each segment
+			for (StepType aStep : aPathConnection.getTarget()) {
+				
+				PathConnectionType tmp = traverseAStepType(aStep, lqnTaskStack);
+				if (tmp != null) {
+					aJoinOrMerge = tmp;
+				}
+			}
+
+			if (aJoinOrMerge != null) {
+				// at least one of the segment hit a merge (i.e. not all the
+				// segments ended with an EndType)
+				nextStep = aJoinOrMerge.getTarget().get(0);
+
+				return traverseAStepType(nextStep, lqnTaskStack);
+			}
+			return null;
+
+		}
+		else if (aPathConnection instanceof SequenceType) {
+			// go to the next step
+			return traverseAStepType(aPathConnection.getTarget().get(0), lqnTaskStack);
+		}
+		else if (aPathConnection instanceof MergeType || aPathConnection instanceof JoinType) {
+			
+			//just return itself, the branch or fork that started the segment will take care of continuing to the next step.
+			return aPathConnection;
+		}
+
+		throw new IllegalArgumentException("Shouldn't have reached here");
+	}
+	
+	private StepType findImmediateNextStep(StepType step){
+		StepType nextStep = null; //here we want to find the next steptype. it could be a RA
+		
+		if (step.getSuccessor() != null){
+			nextStep = step.getSuccessor().getTarget().get(0); 
+		}
+		
+		return nextStep; 
+	}
+	
+	private StepType findPreviousRegularStep(StepType originalStep){
+		StepType step = originalStep; 
+		StepType previousStep = null;
+		
+		boolean flag = true; 
+		while (flag){
+			previousStep = (step.getPredecessor().getSource().size() > 0) ? step.getPredecessor().getSource().get(0): null;
+
+			//if the previousStep is not a regular step, continue looking back. Reset previousStep to null for the next round.
+			if (previousStep instanceof CommStepType  || previousStep instanceof ResourceAcquireType  || previousStep instanceof ResourceReleaseType  || previousStep instanceof ResourcePassType ){
+				step = previousStep;
+				previousStep = null;
+			}
+			else{
+				flag = false;
+				break;
+			}
+		}
+		
+		if (previousStep == null){
+			log("No previous regular step found for step "+ originalStep.getName() + " with ID: "+ originalStep.getId());
+		}
+		return previousStep;
+	}
+	
+	private class TaskTracker{
+		
+		//should know all the steps that are part of this task
+		//should also know the corresponding activities and entries
+		private HashMap<String, Activity> activityMap; //<StepId, Activity>
+		
+		private HashMap<String, Entry> entryMap;  //<CommStepId, Entry>
+		
+		private Entry currentEntry; 
+		private Activity lastTxActivity; //tracks the last Activity added to the task when a message is sent
+		private Activity lastAddedActivity; //the last activity added to the task. 
+		
+		public TaskTracker(){
+			activityMap = new HashMap<>();
+			entryMap = new HashMap<>(); 
+		}
+		
+		public Activity getLastTxActivity(){
+			return lastTxActivity; 
+		}
+		
+		public void setLastTxActivity(Activity activity){
+			lastTxActivity = activity; 
+		}
+		
+		public void setLastAddedActivity(Activity activity){
+			lastAddedActivity = activity; 
+		}
+		
+		public Activity getLastAddedActivity(){
+			return lastAddedActivity; 
+		}
+		
+		public Activity getActivity(String stepId) {
+			return activityMap.get(stepId);
+		}
+
+		public Entry getCurrentEntry() {
+			return currentEntry; 
+		}
+		
+		public void setCurrentEntry(Entry entry){
+			this.currentEntry = entry;
+		}
+
+		public Entry getEntry(String commStepId){
+			return entryMap.get(commStepId); 
+		}
+		
+		public void setEntry(String commStepId, Entry receiverEntry){
+			entryMap.put(commStepId, receiverEntry); 
+		}
+		
+		public void setActivity(String stepId, Activity lqnActivity){
+			activityMap.put(stepId, lqnActivity);
+		}
+		
+		public void printAllActivities(){
+			System.out.println("All Activities ");
+			for (Object activity: activityMap.values()){
+				Activity a = (Activity)activity;
+				System.out.println("  "+ a.getName());
+				System.out.println("      Prev:"+ a.getPrevConnection());
+				if (a.getPrevious() != null){
+					for (Object obj: a.getPrevious()){
+						Activity aa = (Activity)obj;
+						System.out.println("        "+aa.getName());
+					}
+				}
+				System.out.println("      Next:"+ a.getNextConnection());
+				if (a.getNext() != null){
+					for (Object obj: a.getNext()){
+						Activity aa = (Activity)obj;
+						System.out.println("        "+aa.getName());
+					}
+				}
+			}
+		
+		}
+		
+		public void printAllEntries(){
+			System.out.println("All Entries:");
+			for (Object entry:entryMap.values()){
+				Entry e = (Entry)entry;
+				String startActivityName = e.hasStartActivity() ? e.getStartActivity().getName() : "Null (No start Activity)";  
+				System.out.println("Task: "+ e.getTask().getName() + ". Entry: "+e.getName() + " with start Activity: "+ startActivityName);
+				
+			}
+		}
+	}
+}

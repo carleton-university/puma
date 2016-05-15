@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CSMReader_Plugin
+Bundle-SymbolicName: CSMReader_Plugin
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: csm2lqn_plugin.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ CSM;bundle-version="1.0.0",
+ LQN_Model_Plugin;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

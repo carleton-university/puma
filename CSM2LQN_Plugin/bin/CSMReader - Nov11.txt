@@ -1,0 +1,505 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+
+import wrapper.ScenarioTypeWrapper;
+import ca.carleton.sce.puma.CSM.BranchType;
+import ca.carleton.sce.puma.CSM.CSMPackage;
+import ca.carleton.sce.puma.CSM.CSMType;
+import ca.carleton.sce.puma.CSM.EndType;
+import ca.carleton.sce.puma.CSM.ForkType;
+import ca.carleton.sce.puma.CSM.JoinType;
+import ca.carleton.sce.puma.CSM.MergeType;
+import ca.carleton.sce.puma.CSM.PathConnectionType;
+import ca.carleton.sce.puma.CSM.ResourceAcquireType;
+import ca.carleton.sce.puma.CSM.ResourceReleaseType;
+import ca.carleton.sce.puma.CSM.ScenarioElementType;
+import ca.carleton.sce.puma.CSM.ScenarioType;
+import ca.carleton.sce.puma.CSM.SequenceType;
+import ca.carleton.sce.puma.CSM.StartType;
+import ca.carleton.sce.puma.CSM.StepType;
+import ca.carleton.sce.puma.CSM.util.CSMResourceFactoryImpl;
+import ca.carleton.sce.puma.CSM.util.CSMResourceImpl;
+
+
+public class CSMReader {
+
+	public static String HAS_ERROR = "HAS ERROR";
+	
+	ArrayList<ScenarioTypeWrapper> scenarioTypeWrapperList; 
+	String csmFilePath; 
+	CSMType csmType;
+	
+	public static void main (String args[]){
+		String csmPath = "E:\\jeevithan\\consulting\\ProfWoodside\\data\\data_3\\csm examples\\MARTE_ActivityEx3\\Jeeves.csm"; 
+		CSMReader csmReader = new CSMReader(csmPath); 
+	}
+	
+	public CSMReader(String csmPath){
+		this.csmFilePath = csmPath;
+		
+		csmType = loadCSMFile(csmPath);
+		
+		scenarioTypeWrapperList = new ArrayList<>(); 
+		createScenarioTypeWrapperList(); 
+		
+		stepOne_IsCSMValid(); 
+	}
+	
+	public void createScenarioTypeWrapperList()
+	{
+		
+		EList<ScenarioType> list = (EList<ScenarioType>) csmType.getScenarioList();
+		for (ScenarioType scenarioType: list)
+		{
+			ScenarioTypeWrapper stw = new ScenarioTypeWrapper(scenarioType); 
+			scenarioTypeWrapperList.add(stw); 
+			
+			//Print for testing
+//			printIDs(stw.getAllStartTypeIDs(), "Start"); 
+//			printIDs(stw.getAllStepTypeIDs(), "Step");
+//			printIDs(stw.getAllResourceAcquireTypeIDs(), "ResourceAcquire");
+//			printIDs(stw.getAllResourceReleaseTypeIDs(), "ResourceRelease");
+			
+		}
+		
+	}
+	
+	private void printIDs(ArrayList<String> ids, String type){
+		System.out.println(type); 
+		
+		for (String id:ids){
+			System.out.print(id + " "); 
+		}
+		
+		System.out.println(); 
+	}
+	
+	/*
+	 * Step 1: Check CSM Validity
+	 */
+	public boolean stepOne_IsCSMValid(){
+		
+		boolean isCSMValid = true;  
+		boolean areStartTypesValid = true; 
+		boolean areEndTypesValid = true; 
+		
+		System.out.println("\n..........Validating Starts........");
+		for (ScenarioTypeWrapper scenarioType: scenarioTypeWrapperList)
+		{
+			areStartTypesValid = areAllStartTypesValid(scenarioType.getAllStartType(), scenarioType); 
+		}
+		
+		System.out.println("\n..........Validating Ends........");
+		for (ScenarioTypeWrapper scenarioType: scenarioTypeWrapperList)
+		{
+			areEndTypesValid = areAllEndTypesValid(scenarioType.getAllEndType(), scenarioType); 
+			
+		}
+		
+		return isCSMValid; 
+	}
+	
+	private boolean areAllSequenceTypesValid(EList<SequenceType> sequenceList, ScenarioTypeWrapper scenarioType)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false; 
+		
+		for (SequenceType sequenceType : sequenceList)
+		{
+			if (sequenceType.getTarget() != null && sequenceType.getTarget().size() > 0){
+				error.append("Sequence (ID: "+ sequenceType.getId() + ") is not allowed to have a target attribute").append("\n"); 
+				hasError = true; 
+				continue;
+			}
+			
+		
+		
+			if (sequenceType.getSource() == null){
+				error.append("Sequence (ID: "+ sequenceType.getId() + ") must have a source attribute with the ID of a Step, ResourceAcquire, ResourceRelease, or a ResourcePass").append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			if (sequenceType.getSource().size() != 1)
+			{
+				error.append("Sequence (ID: "+ sequenceType.getId() + ") could only have a single source").append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			String source = ((ScenarioElementType) sequenceType.getSource().get(0)).getId();
+			if (checkForMultipleIDs(source) == false)
+			{
+				error.append("Sequence (ID: "+ sequenceType.getId() + ") has multiple sources " + source).append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			if (!scenarioType.getAllStepTypeIDs().contains(source) && !scenarioType.getAllResourceAcquireTypeIDs().contains(source) && 
+					!scenarioType.getAllResourceReleaseTypeIDs().contains(source))
+			{
+				error.append("Sequence (ID: "+ sequenceType.getId() + ") source - "+ source + " is not matched with a Step or a ResourceAcquire or a ResourceRelease or a ResourcePass").append("\n");
+				hasError = true; 
+				continue;
+			}
+			else{
+				System.out.println("    Sequence (ID: "+ sequenceType.getId() + ") of Scenario ("+scenarioType.getName()+") has a matched source!!"); 
+			}
+		
+		}
+		
+		
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return false;
+		}
+		System.out.println("No errors found with Ends of Scenario ("+scenarioType.getName()+")");
+		return true;
+		
+	}
+	
+	
+	private boolean areAllEndTypesValid(EList<EndType> endList, ScenarioTypeWrapper scenarioType)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false; 
+		
+		for (EndType endType : endList)
+		{
+			if (endType.getTarget() != null && endType.getTarget().size() > 0){
+				error.append("End (ID: "+ endType.getId() + ") is not allowed to have a target attribute").append("\n"); 
+				hasError = true; 
+				continue;
+			}
+			
+		
+		
+			if (endType.getSource() == null){
+				error.append("End (ID: "+ endType.getId() + ") must have a source attribute with the ID of a Step, ResourceAcquire, ResourceRelease, or a ResourcePass").append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			if (endType.getSource().size() != 1)
+			{
+				error.append("End (ID: "+ endType.getId() + ") could only have a single source").append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			String source = ((ScenarioElementType) endType.getSource().get(0)).getId();
+			if (checkForMultipleIDs(source) == false)
+			{
+				error.append("End (ID: "+ endType.getId() + ") has multiple sources " + source).append("\n"); 
+				hasError = true; 
+				continue; 
+			}
+			
+			if (!scenarioType.getAllStepTypeIDs().contains(source) && !scenarioType.getAllResourceAcquireTypeIDs().contains(source) && 
+					!scenarioType.getAllResourceReleaseTypeIDs().contains(source))
+			{
+				error.append("End (ID: "+ endType.getId() + ") source - "+ source + " is not matched with a Step or a ResourceAcquire or a ResourceRelease or a ResourcePass").append("\n");
+				hasError = true; 
+				continue;
+			}
+			else{
+				System.out.println("    End (ID: "+ endType.getId() + ") of Scenario ("+scenarioType.getName()+") has a matched source!!"); 
+			}
+		
+		}
+		
+		
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return false;
+		}
+		System.out.println("No errors found with Ends of Scenario ("+scenarioType.getName()+")");
+		return true;
+		
+	}
+	
+	public boolean areAllStartTypesValid(EList<StartType> startList, ScenarioTypeWrapper scenarioType)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false; 
+		
+		for (StartType startType : startList)
+		{
+			if (!hasNoSource(startType, "Start"))
+			{
+				hasError = true;
+				continue;
+			}
+			
+//			if (startType.getSource() != null && startType.getSource().size() > 0){
+//				error.append("Start (ID: "+ startType.getId() + ") is not allowed to have a source attribute").append("\n"); 
+//				hasError = true; 
+//				continue;
+//			}
+			
+			//single target
+//			if (startType.getTarget() == null){
+//				error.append("Start (ID: "+ startType.getId() + ") must have a target attribute with the ID of a Step, ResourceAcquire, ResourceRelease, or a ResourcePass").append("\n"); 
+//				hasError = true; 
+//				continue; 
+//			}
+//			
+//			if (startType.getTarget().size() != 1)
+//			{
+//				error.append("Start (ID: "+ startType.getId() + ") could only have a single target").append("\n"); 
+//				hasError = true; 
+//				continue; 
+//			}
+			
+			
+//			String target = ((ScenarioElementType) startType.getTarget().get(0)).getId();
+//			if (checkForMultipleIDs(target) == false)
+//			{
+//				error.append("Start (ID: "+ startType.getId() + ") has multiple targets " + target).append("\n"); 
+//				hasError = true; 
+//				continue; 
+//			}
+			
+			//
+			
+			String target = hasOnlyASingleTarget(startType, "Start");
+			if (target.equals(HAS_ERROR)){
+				hasError = true;
+				continue; 
+			}
+			
+			ArrayList<String> collection = new ArrayList<>(); 
+			collection.addAll(scenarioType.getAllStepTypeIDs());
+			collection.addAll(scenarioType.getAllResourceAcquireTypeIDs());
+			collection.addAll(scenarioType.getAllResourceReleaseTypeIDs());
+			
+			if (!isFoundInCollection(target, "target", collection, "a Step or a ResourceAcquire or a ResourceRelease or a ResourcePass", "Start", startType.getId()))
+			{
+				hasError = true;
+				continue;
+			}
+			
+			
+//			if (!scenarioType.getAllStepTypeIDs().contains(target) && !scenarioType.getAllResourceAcquireTypeIDs().contains(target) && 
+//					!scenarioType.getAllResourceReleaseTypeIDs().contains(target))
+//			{
+//				error.append("Start (ID: "+ startType.getId() + ") target - "+ target + " is not matched with a Step or a ResourceAcquire or a ResourceRelease or a ResourcePass").append("\n");
+//				hasError = true; 
+//				continue;
+//			}
+//			else{
+//				System.out.println("    Start (ID: "+ startType.getId() + ") of Scenario ("+scenarioType.getName()+") has a matched target!!"); 
+//			}
+				
+		}
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return false;
+		}
+		
+		System.out.println("No errors found with Starts of Scenario ("+scenarioType.getName()+")");
+		return true; 
+	}
+	
+	private boolean isFoundInCollection(String value, String valueName, ArrayList<String> collection, String collectionName, String elementName, String id)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false;
+		
+		if (!collection.contains(value)){
+			error.append(elementName +" (ID: "+ id + ") "+ valueName + " " + value + " is not matched with "+collectionName).append("\n");
+			hasError = true; 
+		}
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return false;
+		}
+		return true; 
+		
+	}
+	
+	private boolean hasNoSource(PathConnectionType element, String elementName)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false;
+		
+		if (element.getSource() != null && element.getSource().size() > 0)
+		{
+			error.append(elementName + " (ID: "+ element.getId() + ") is not allowed to have a source attribute").append("\n");  
+			hasError = true; 
+		}
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return false;
+		}
+		return true; 
+	}
+	
+	private String hasOnlyASingleTarget(PathConnectionType element, String elementName)
+	{
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false;
+		String target = null; 
+		
+		if (element.getTarget() == null){
+			error.append(elementName + " (ID: "+ element.getId() + ") must have a target attribute with the ID of a Step, ResourceAcquire, ResourceRelease, or a ResourcePass").append("\n"); 
+			hasError = true; 
+		}
+		else if (element.getTarget().size() != 1)
+		{
+			error.append("elementName (ID: "+ element.getId() + ") could only have a single target").append("\n"); 
+			hasError = true; 
+			 
+		}
+		else
+		{	
+			target = ((ScenarioElementType) element.getTarget().get(0)).getId();
+			if (checkForMultipleIDs(target) == false)
+			{
+				error.append("Start (ID: "+ element.getId() + ") has multiple targets " + target).append("\n"); 
+				hasError = true; 
+			}
+//			else{
+//				return target; 
+//			}
+		}
+		
+		if (hasError){
+			System.out.println(error.toString()); 
+			return HAS_ERROR;
+		}
+		else
+		{
+			return target; 
+		}
+	}
+	
+	boolean checkForMultipleIDs(String id)
+	{
+		if (id.indexOf(',') >= 0)
+		{
+			return false; 
+		}
+		
+		return true; 
+	}
+	
+	public boolean stepOneOld(){
+		StringBuilder error = new StringBuilder(); 
+		boolean hasError = false; 
+		
+		ArrayList<ScenarioType> list = (ArrayList<ScenarioType>) csmType.getScenarioList();
+		for (ScenarioType scenarioType: list){
+			
+			System.out.println(scenarioType.getName() + ": "+ scenarioType.getId());
+			
+			
+			
+			List<StartType> startList = scenarioType.getStartList(); 
+			List<EndType> endList = scenarioType.getEndList(); 
+			List<SequenceType> sequenceList = scenarioType.getSequenceList();
+			List<ForkType> forkList = scenarioType.getForkList();
+			List<JoinType> joinList = scenarioType.getJoinList();
+			List<BranchType> branchList = scenarioType.getBranchList();
+			List<MergeType> mergeList = scenarioType.getMergeList();
+			List<StepType> stepList = scenarioType.getStepList();
+			
+			List<ResourceAcquireType> resourceAcquireList = scenarioType.getResourceAcquireList();
+			List<ResourceReleaseType> resourceReleaseList = scenarioType.getResourceReleaseList();
+			
+//			List<ResourcePassType> resourcePassList = scenarioType.getResourcePassList();
+			
+			for (StartType startType: startList){
+				
+				if (startType.getSource() != null){
+					error.append("Start (ID: "+ startType.getId() + ") " + "is not allowed to have a source attribute"); 
+					hasError = true; 
+				}
+				if (startType.getTarget() == null){
+					error.append("Start (ID: "+ startType.getId() + ") " + "must have a target attribute with the ID of a Step, ResourceAcquire, ResourceRelease, or a ResourcePass");
+					hasError = true; 
+				}
+				else{
+					String target = (String) startType.getTarget().get(0);
+					System.out.println("target : "+ target); 
+					
+				}
+			}
+			
+			 
+		}
+		
+		
+		return true; 
+	}
+	
+	
+//	public static void loadCSMFileNew(String csmPath){
+//		XMIResource resource = new XMIResourceImpl(URI.createFileURI( csmPath ));
+//		resource.load(null);
+////		System.out.println( resource.getAllContents().get(0) );
+//		
+//	}
+	
+	public CSMType loadCSMFile(String csmPath)
+	{
+		CSMType csmType = null;
+		String message = null;
+		String error = null;
+		
+		File csmFile = new File( csmPath );
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put( "csm", new CSMResourceFactoryImpl() );
+		resourceSet.getPackageRegistry().put( "CSM.xsd", CSMPackage.eINSTANCE );
+		
+		CSMResourceImpl csmResource = new CSMResourceImpl( URI.createFileURI( csmPath ));
+		
+		resourceSet.getResources().add( csmResource );
+
+		Map<String, Object> loadOptions = new HashMap<String, Object>();
+		loadOptions.put( XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE );
+//		loadOptions.put( XMLResource.OPTION_SCHEMA_LOCATION_IMPLEMENTATION, Boolean.TRUE );
+		loadOptions.put( XMLResource.SCHEMA_LOCATION, "java://ca.carleton.sce.puma.CSM.CSMPackage" );
+		
+		try {
+			FileInputStream is = new FileInputStream( csmFile );
+			csmResource.load( is, loadOptions );
+			csmType = (CSMType) EcoreUtil.getObjectByType( csmResource.getContents(), CSMPackage.eINSTANCE.getCSMType() );
+		} catch (FileNotFoundException e) {
+			message = "CSM File \"" + csmPath + "\" could not be found.";
+			error = e.getMessage();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			message = "An I/O error occurred with CSM File \"" + csmPath + "\".";
+		        error = e1.getMessage();
+		} 
+		
+		if( error != null ){
+		    System.out.println( message );
+		    System.out.println( error );
+		}
+
+//		System.out.println("Return csmType "+ csmType); 
+		return csmType;
+	}
+	
+}

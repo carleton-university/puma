@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/CSM/src" modelPluginID="CSM" modelName="CSM" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="7.0" copyrightFields="false">
+  <foreignModel>file:/E:/jeevithan/consulting/ProfWoodside/data/puma_trunk/csmClasses/model/CSM.xsd</foreignModel>
+  <genPackages prefix="CSM" basePackage="ca.carleton.sce.puma" resource="XML" disposableProviderFactory="true"
+      ecorePackage="CSM.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//ArrivalProcess">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//ArrivalProcess/periodic"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//ArrivalProcess/phaseType"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//ArrivalProcess/poissonPDF"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//ArrivalProcess/uniform"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//MsgKind">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//MsgKind/async"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//MsgKind/fwd"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//MsgKind/sync"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//MsgKind/reply"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//PerfMeasureKind">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfMeasureKind/delay"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfMeasureKind/interval"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfMeasureKind/throughput"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfMeasureKind/utilization"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfMeasureKind/wait"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//PerfValueKind">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/distribution"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/max"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/mean"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/min"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/moment"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/percentile"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueKind/variance"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//PerfValueSource">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueSource/assumed"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueSource/measured"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueSource/predicted"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//PerfValueSource/required"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//StepKind">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//StepKind/normal"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//StepKind/externalOperation"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//StepKind/behaviorDemand"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//StepKind/serviceDemand"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//StepKind/nullStep"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CSM.ecore#//SynchronizationKind">
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//SynchronizationKind/false"/>
+      <genEnumLiterals ecoreEnumLiteral="CSM.ecore#//SynchronizationKind/true"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="CSM.ecore#//ArrivalProcessObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//MsgKindObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//PerfMeasureKindObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//PerfValueKindObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//PerfValueSourceObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//StepKindObject"/>
+    <genDataTypes ecoreDataType="CSM.ecore#//SynchronizationKindObject"/>
+    <genClasses ecoreClass="CSM.ecore#//ActiveResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ActiveResourceType/opTime"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//AspectStepType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//AspectStepType/aspectDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//BranchType"/>
+    <genClasses ecoreClass="CSM.ecore#//ClosedWorkloadType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ClosedWorkloadType/population"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//CommLinkType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommLinkType/blockT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommLinkType/capacity"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommLinkType/processingHostList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommLinkType/resMult"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommLinkType/speedFactor"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//CommStepType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommStepType/commLink"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommStepType/msgKind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CommStepType/msgSize"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommStepType/predCommStep"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommStepType/rcvComp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommStepType/succCommStep"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//CommStepType/txComp"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ComponentType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ComponentType/host"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ComponentType/isActiveProcess"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ComponentType/parentComponent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ComponentType/subComponentList"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//CSMElementType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMElementType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMElementType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMElementType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMElementType/traceabilityLink"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//CSMType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/scenarioList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/componentList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/commLinkList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/processingResourceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/logicalResourceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/variableList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//CSMType/perfMeasureList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/created"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/modified"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/traceabilityLink"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//CSMType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CSM.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CSM.ecore#//DocumentRoot/cSM"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//EndType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//EndType/outBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ExternalDemandType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ExternalDemandType/count"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ExternalDemandType/externalOperation"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ForkType"/>
+    <genClasses ecoreClass="CSM.ecore#//GeneralResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//GeneralResourceType/multiplicity"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//GeneralResourceType/perfMeasureList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//GeneralResourceType/schedPolicy"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//InBindingType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//InBindingType/inStep"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//InBindingType/start"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//JoinType"/>
+    <genClasses ecoreClass="CSM.ecore#//LogicalResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//LogicalResourceType/nestedOnly"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//MergeType"/>
+    <genClasses ecoreClass="CSM.ecore#//OpenWorkloadType"/>
+    <genClasses ecoreClass="CSM.ecore#//OutBindingType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//OutBindingType/end"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//OutBindingType/outStep"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//PathConnectionType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PathConnectionType/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PathConnectionType/target"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//PerfMeasureType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/perfValueList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/durationOf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//PerfMeasureType/measureKind"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/predPerfMeasure"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/resource"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/stoppedBy"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/succPerfMeasure"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//PerfMeasureType/triggeredBy"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//PerfValueType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//PerfValueType/kind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//PerfValueType/source"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//PerfValueType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ProcessingResourceType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ProcessingResourceType/commLinkList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ProcessingResourceType/commRcvOvh"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ProcessingResourceType/commTxOvh"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ProcessingResourceType/speedFactor"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//RefinementType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//RefinementType/inBinding"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//RefinementType/outBinding"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//RefinementType/roleBindingList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//RefinementType/parentStep"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//RefinementType/subScenario"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ResourceAcquireType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ResourceAcquireType/acquire"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ResourceAcquireType/priority"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ResourceAcquireType/rUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ResourcePassType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CSM.ecore#//ResourcePassType/pass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ResourcePassType/rUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ResourceReleaseType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ResourceReleaseType/release"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ResourceReleaseType/rUnits"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//RoleBindingType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CSM.ecore#//RoleBindingType/elementId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//RoleBindingType/elementName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CSM.ecore#//RoleBindingType/roleId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//RoleBindingType/roleName"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ScenarioElementType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioElementType/durationPerfMeasureList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioElementType/stopPerfMeasureList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioElementType/triggerPerfMeasureList"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//ScenarioType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/stepList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/commStepList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/resourceAcquireList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/resourceReleaseList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/resourcePassList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/aspectStepList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/startList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/endList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/sequenceList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/branchList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/mergeList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/forkList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/joinList"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//ScenarioType/parentRefinementList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//ScenarioType/probability"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//SequenceType"/>
+    <genClasses ecoreClass="CSM.ecore#//StartType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//StartType/closedWorkload"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//StartType/openWorkload"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//StartType/inBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//StepType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//StepType/refinement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CSM.ecore#//StepType/externalDemand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/blockT"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//StepType/component"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/hostDemand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/nosync"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//StepType/predecessor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/probability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/repetitionCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/respT"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//StepType/stepKind"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//StepType/successor"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//VariableType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//VariableType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//VariableType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="CSM.ecore#//WorkloadType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//WorkloadType/arrivalParam1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//WorkloadType/arrivalParam2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//WorkloadType/arrivalProcess"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CSM.ecore#//WorkloadType/externalDelay"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CSM.ecore#//WorkloadType/responseTimeList"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
