@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ASCII"?>
+<CSM:CSM xmlns:CSM="platform:/plugin/ca.carleton.sce.puma.csm/model/CSM.xsd" name="BSS">
+  <Scenario id="SC00000" name="GetImage">
+    <Step id="ST00000" component="CM00000" name="getBuf" hostDemand="1.8" predecessor="SQ00034" successor="SQ00002"/>
+    <Step id="ST00001" component="CM00001" name="allocBuffer" hostDemand="0.5" predecessor="SQ00000" successor="SQ00004"/>
+    <Step id="ST00002" component="CM00000" name="getImage" predecessor="SQ00007" successor="SQ00010"/>
+    <Step id="ST00003" component="CM00000" name="passImage" predecessor="SQ00010" successor="FR00000"/>
+    <Step id="ST00004" component="CM00002" name="storeImage" hostDemand="2.5" predecessor="SQ00013" successor="SQ00018"/>
+    <Step id="ST00005" component="CM00003" name="storeDB" hostDemand="2" predecessor="SQ00017" successor="SQ00023"/>
+    <Step id="ST00006" component="CM00002" name="freeBuf" hostDemand="0.2" predecessor="SQ00022" successor="SQ00027"/>
+    <Step id="ST00007" component="CM00001" name="deallocBuffer" hostDemand="0.5" predecessor="SQ00026" successor="SQ00001"/>
+    <Step id="ST00008" component="CM00002" name="cleanUp" predecessor="SQ00029" successor="SQ00032"/>
+    <Step id="ST00009" component="CM00002" name="TxOH" hostDemand="0.01" predecessor="SQ00018" successor="SQ00014"/>
+    <Step id="ST00010" component="CM00002" name="RcvOH" hostDemand="0.005" predecessor="SQ00020" successor="SQ00022"/>
+    <CommStep id="CS00000" name="getBuf" component="CM00000" predecessor="SQ00002" successor="SQ00003" rcvComp="CM00001" txComp="CM00000"/>
+    <CommStep id="CS00001" name="returnBuf" component="CM00001" predecessor="SQ00006" successor="SQ00007" rcvComp="CM00000" txComp="CM00001"/>
+    <CommStep id="CS00002" name="storeImage" predecessor="SQ00011" successor="SQ00012" rcvComp="CM00002" txComp="CM00000"/>
+    <CommStep id="CS00003" name="storeDB" component="CM00002" blockT="2" predecessor="SQ00014" successor="SQ00016" commLink="CL00001" rcvComp="CM00003" txComp="CM00002"/>
+    <CommStep id="CS00004" name="doneDB" component="CM00003" blockT="2" predecessor="SQ00019" successor="SQ00020" commLink="CL00001" rcvComp="CM00002" txComp="CM00003"/>
+    <CommStep id="CS00005" name="freeBuf" component="CM00002" predecessor="SQ00027" successor="SQ00025" rcvComp="CM00001" txComp="CM00002"/>
+    <CommStep id="CS00006" name="doneBuf" component="CM00001" predecessor="SQ00028" successor="SQ00029" rcvComp="CM00002" txComp="CM00001"/>
+    <CommStep id="CS00007" name="start" predecessor="BG00000" successor="SQ00033" rcvComp="CM00000"/>
+    <Step id="RA00000" name="acquireBuffer" component="CM00001" predecessor="SQ00004" successor="SQ00005"/>
+    <ResourceAcquire component="CM00001" id="RA00001" predecessor="SQ00003" successor="SQ00000" acquire="CM00001"/>
+    <ResourceAcquire component="CM00002" id="RA00003" predecessor="SQ00012" successor="SQ00013" acquire="CM00002"/>
+    <ResourceAcquire component="CM00003" id="RA00004" predecessor="SQ00016" successor="SQ00017" acquire="CM00003"/>
+    <ResourceAcquire component="CM00001" id="RA00006" predecessor="SQ00025" successor="SQ00026" acquire="CM00001"/>
+    <ResourceAcquire component="CM00000" id="RA00008" predecessor="SQ00033" successor="SQ00034" acquire="CM00000"/>
+    <Step id="RR00000" name="releaseBuffer" component="CM00001" predecessor="SQ00001" successor="SQ00031"/>
+    <ResourceRelease component="CM00001" id="RR00002" predecessor="SQ00005" successor="SQ00006" release="CM00001"/>
+    <ResourceRelease component="CM00000" id="RR00003" predecessor="FR00000" successor="SQ00011" release="CM00000"/>
+    <ResourceRelease component="CM00003" id="RR00005" predecessor="SQ00023" successor="SQ00019" release="CM00003"/>
+    <ResourceRelease component="CM00001" id="RR00007" predecessor="SQ00031" successor="SQ00028" release="CM00001"/>
+    <ResourceRelease component="CM00002" id="RR00008" predecessor="SQ00032" successor="FN00000" release="CM00002"/>
+    <Start id="BG00000" name="Start" target="CS00007">
+      <ClosedWorkload arrivalProcess="poissonPDF" externalDelay="1.0" population="1000"/>
+    </Start>
+    <End id="FN00000" name="End" source="RR00008"/>
+    <Sequence id="SQ00000" source="RA00001" target="ST00001"/>
+    <Sequence id="SQ00001" source="ST00007" target="RR00000"/>
+    <Sequence id="SQ00002" source="ST00000" target="CS00000"/>
+    <Sequence id="SQ00003" source="CS00000" target="RA00001"/>
+    <Sequence id="SQ00004" source="RA00001" target="RA00000"/>
+    <Sequence id="SQ00005" source="RA00000" target="RR00002"/>
+    <Sequence id="SQ00006" source="RR00002" target="CS00001"/>
+    <Sequence id="SQ00007" source="CS00001" target="ST00002"/>
+    <Sequence id="SQ00010" source="ST00002" target="ST00003"/>
+    <Sequence id="SQ00011" source="RR00003" target="CS00002"/>
+    <Sequence id="SQ00012" source="CS00002" target="RA00003"/>
+    <Sequence id="SQ00013" source="RA00003" target="ST00004"/>
+    <Sequence id="SQ00014" source="ST00009" target="CS00003"/>
+    <Sequence id="SQ00016" source="CS00003" target="RA00004"/>
+    <Sequence id="SQ00017" source="RA00004" target="ST00005"/>
+    <Sequence id="SQ00018" source="ST00004" target="ST00009"/>
+    <Sequence id="SQ00019" source="RR00005" target="CS00004"/>
+    <Sequence id="SQ00020" source="CS00004" target="ST00010"/>
+    <Sequence id="SQ00022" source="ST00010" target="ST00006"/>
+    <Sequence id="SQ00023" source="ST00005" target="RR00005"/>
+    <Sequence id="SQ00025" source="CS00005" target="RA00006"/>
+    <Sequence id="SQ00026" source="RA00006" target="ST00007"/>
+    <Sequence id="SQ00027" source="ST00006" target="CS00005"/>
+    <Sequence id="SQ00028" source="RR00007" target="CS00006"/>
+    <Sequence id="SQ00029" source="CS00006" target="ST00008"/>
+    <Sequence id="SQ00031" source="RR00000" target="RR00007"/>
+    <Sequence id="SQ00032" source="ST00008" target="RR00008"/>
+    <Sequence id="SQ00033" source="CS00007" target="RA00008"/>
+    <Sequence id="SQ00034" source="RA00008" target="ST00000"/>
+    <Sequence id="FR00000" source="ST00003" target="RR00003"/>
+  </Scenario>
+  <CommLink id="CL00000" name="LAN" host="PR00000" blockT="5" capacity="100000.0" processingHostList="PR00001 PR00002"/>
+  <CommLink id="CL00001" name="Backend" host="PR00003" blockT="2" capacity="1000000.0" processingHostList="PR00004 PR00001"/>
+  <Component id="CM00000" name="CaptureImage" host="PR00001"/>
+  <Component id="CM00001" name="BufMgr" host="PR00001"/>
+  <Component id="CM00002" name="StoreImage" host="PR00001"/>
+  <Component id="CM00003" name="DB" host="PR00004"/>
+  <ProcessingResource id="PR00000" name="LAN-processor"/>
+  <ProcessingResource id="PR00001" name="ControlNode" multiplicity="1" commLinkList="CL00000 CL00001" commRcvOvh="0.01" commTxOvh="0.05" speedFactor="5.0"/>
+  <ProcessingResource id="PR00002" name="Camera" multiplicity="1" commLinkList="CL00000" speedFactor="1.0"/>
+  <ProcessingResource id="PR00003" name="Backend-processor"/>
+  <ProcessingResource id="PR00004" name="DataBaseNode" multiplicity="1" commLinkList="CL00001" speedFactor="1.0"/>
+  <LogicalResource id="LR00000" name=":bufferpool" multiplicity="1000"/>
+</CSM:CSM>

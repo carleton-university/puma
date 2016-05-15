@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ASCII"?>
+<CSM:CSM xmlns:CSM="platform:/plugin/ca.carleton.sce.puma.csm/model/CSM.xsd" name="LMP_2014-08-02_Update_Data">
+  <Scenario id="SC00000" name="LMP Update Data">
+    <Step id="ST00000" name="GetInternalJobs" predecessor="SQ00002" successor="SQ00004"/>
+    <Step id="ST00001" name="UpdateInternalJobs" predecessor="SQ00007" successor="SQ00009"/>
+    <Step id="ST00002" name="GetExternalJobs" predecessor="SQ00011" successor="SQ00013"/>
+    <Step id="ST00003" name="ValidateExternalJobs" predecessor="SQ00017" successor="SQ00019"/>
+    <Step id="ST00004" name="GetExternalJobs" predecessor="SQ00023" successor="SQ00025"/>
+    <Step id="ST00005" name="ValidateExternalJobs" predecessor="SQ00029" successor="SQ00031"/>
+    <Step id="ST00006" name="UpdateExternalJobs" predecessor="SQ00034" successor="FN00000"/>
+    <CommStep description="complete" id="CS00000" name="GetInternalJobs" predecessor="BG00000" successor="SQ00002" msgKind="sync" succCommStep="CS00001"/>
+    <CommStep description="complete" id="CS00001" name="GetInternalJobs-reply" predecessor="SQ00004" successor="SQ00007" msgKind="reply" predCommStep="CS00000"/>
+    <CommStep description="complete" id="CS00002" name="GetExternalJobs" predecessor="SQ00009" successor="SQ00011" msgKind="sync" succCommStep="CS00003"/>
+    <CommStep description="complete" id="CS00003" name="GetExternalJobs-reply" predecessor="SQ00013" successor="SQ00015" msgKind="reply" predCommStep="CS00002"/>
+    <CommStep description="complete" id="CS00004" name="ValidateExternalJobs" predecessor="SQ00015" successor="SQ00017" msgKind="sync" succCommStep="CS00005"/>
+    <CommStep description="complete" id="CS00005" name="ValidateExternalJobs-reply" predecessor="SQ00019" successor="SQ00021" msgKind="reply" predCommStep="CS00004"/>
+    <CommStep description="complete" id="CS00006" name="GetExternalJobs" predecessor="SQ00021" successor="SQ00023" msgKind="sync"/>
+    <CommStep description="complete" id="CS00007" name="GetExternalJobs-reply" predecessor="SQ00025" successor="SQ00027" msgKind="reply"/>
+    <CommStep description="complete" id="CS00008" name="ValidateExternalJobs" predecessor="SQ00027" successor="SQ00029" msgKind="sync"/>
+    <CommStep description="complete" id="CS00009" name="ValidateExternalJobs-reply" predecessor="SQ00031" successor="SQ00034" msgKind="reply"/>
+    <Start id="BG00000" target="CS00000"/>
+    <End id="FN00000" source="ST00006"/>
+    <Sequence id="SQ00002" source="CS00000" target="ST00000"/>
+    <Sequence id="SQ00004" source="ST00000" target="CS00001"/>
+    <Sequence id="SQ00007" source="CS00001" target="ST00001"/>
+    <Sequence id="SQ00009" source="ST00001" target="CS00002"/>
+    <Sequence id="SQ00011" source="CS00002" target="ST00002"/>
+    <Sequence id="SQ00013" source="ST00002" target="CS00003"/>
+    <Sequence id="SQ00015" source="CS00003" target="CS00004"/>
+    <Sequence id="SQ00017" source="CS00004" target="ST00003"/>
+    <Sequence id="SQ00019" source="ST00003" target="CS00005"/>
+    <Sequence id="SQ00021" source="CS00005" target="CS00006"/>
+    <Sequence id="SQ00023" source="CS00006" target="ST00004"/>
+    <Sequence id="SQ00025" source="ST00004" target="CS00007"/>
+    <Sequence id="SQ00027" source="CS00007" target="CS00008"/>
+    <Sequence id="SQ00029" source="CS00008" target="ST00005"/>
+    <Sequence id="SQ00031" source="ST00005" target="CS00009"/>
+    <Sequence id="SQ00034" source="CS00009" target="ST00006"/>
+  </Scenario>
+</CSM:CSM>

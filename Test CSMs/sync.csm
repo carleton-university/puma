@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<CSM:CSM xmlns:CSM="platform:/plugin/ca.carleton.sce.puma.csm/model/CSM.xsd" name="synctest1">
+
+<!-- Environment calls TaskA which makes a sync call to TaskB -->
+
+  <Scenario id="SC00000" name="synctest1">
+    <Step id="ST_A1" name="A1" predecessor="SQ00001" successor="SQ00002" hostDemand="2" repetitionCount="1.0"/>
+    <Step id="ST_B1" name="B1" predecessor="SQ00005" successor="SQ00006" hostDemand="2" repetitionCount="2.0"/>
+    <Step id="ST_A2" name="A2" predecessor="SQ00009" successor="SQ00010" hostDemand="2" repetitionCount="3.0"/>
+	
+    <CommStep id="CS00000" predecessor="BG00000" successor="SQ00000" rcvComp="CM00000" msgSize="1" msgKind="sync"/> <!-- Initial call to Task A -->
+    <CommStep id="CS00001" predecessor="SQ00003" successor="SQ00004" rcvComp="CM00001" txComp="CM00000" msgSize="2" msgKind="sync"/> <!-- Algorithm should recognize this as SYNC -->
+    <CommStep id="CS00002" predecessor="SQ00007" successor="SQ00008" rcvComp="CM00000" txComp="CM00001" msgSize="3" msgKind="reply"/>
+    <CommStep id="CS00003" predecessor="SQ00011" successor="FN00000" txComp="CM00000" msgSize="4" msgKind="reply"/>
+	
+    <ResourceAcquire id="RA00000" predecessor="SQ00000" successor="SQ00001" acquire="CM00000"/> <!-- Acquiring TaskA -->
+    <ResourceAcquire id="RA00001" predecessor="SQ00004" successor="SQ00005" acquire="CM00001"/> <!-- Acquiring TaskB -->
+    <ResourceAcquire id="RA00002" predecessor="SQ00008" successor="SQ00009" acquire="CM00000"/> <!-- Acquiring TaskA, should be removed by the algorithm -->
+   
+    <ResourceRelease id="RR00000" predecessor="SQ00002" successor="SQ00003" release="CM00000"/> <!-- Releasing TaskA, should be removed by the algorithm -->
+    <ResourceRelease id="RR00001" predecessor="SQ00006" successor="SQ00007" release="CM00001"/> <!-- Releasing TaskB -->
+    <ResourceRelease id="RR00002" predecessor="SQ00010" successor="SQ00011" release="CM00000"/> <!-- Releasing TaskA -->
+
+    <Start id="BG00000" target="CS00000">
+      <ClosedWorkload arrivalProcess="poissonPDF" externalDelay="10" population="10"/>
+    </Start>
+    <Sequence id="SQ00000" source="CS00000" target="RA00000"/>
+    <Sequence id="SQ00001" source="RA00000" target="ST_A1"/>
+    <Sequence id="SQ00002" source="ST_A1" target="RR00000"/>
+    <Sequence id="SQ00003" source="RR00000" target="CS00001"/>
+    <Sequence id="SQ00004" source="CS00001" target="RA00001"/>
+    <Sequence id="SQ00005" source="RA00001" target="ST_B1"/>
+    <Sequence id="SQ00006" source="ST_B1" target="RR00001"/>
+    <Sequence id="SQ00007" source="RR00001" target="CS00002"/>
+    <Sequence id="SQ00008" source="CS00002" target="RA00002"/>
+    <Sequence id="SQ00009" source="RA00002" target="ST_A2"/>
+    <Sequence id="SQ00010" source="ST_A2" target="RR00002"/>
+    <Sequence id="SQ00011" source="RR00002" target="CS00003"/>
+    <End id="FN00000" source="CS00003"/>
+  </Scenario>
+  
+  <Component id="CM00000" name="TaskA" multiplicity="3" host="PR00001"/>
+  <Component id="CM00001" name="TaskB" host="PR00002"/>
+  
+  <ProcessingResource id="PR00001" name="Host2" multiplicity="1" commRcvOvh="15.3" commTxOvh="3.5" speedFactor="1.0"/>
+  <ProcessingResource id="PR00002" name="Host1" multiplicity="1" commRcvOvh="ROH*0.001" commTxOvh="4.71" speedFactor="1.0"/>  
+</CSM:CSM>
