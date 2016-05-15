@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ASCII"?>
+<CSM:CSM xmlns:CSM="platform:/plugin/ca.carleton.sce.puma.csm/model/CSM.xsd" name="test">
+  <Scenario id="SC00011" name="LMP Test">
+    <Step id="ST00068" name="Begin" predecessor="SQ00353" probability="1.0" repetitionCount="1.0" successor="SQ00355"/>
+    <Step id="ST00069" name="" predecessor="SQ00357" probability="1.0" repetitionCount="1.0" successor="SQ00359"/>
+    <Step id="ST00070" name="" predecessor="SQ00362" probability="1.0" repetitionCount="1.0" successor="FN00011"/>
+    <CommStep description="complete" id="CS00074" name="Begin" predecessor="BG00011" successor="SQ00353" msgKind="sync"/>
+    <CommStep description="complete" id="CS00075" predecessor="SQ00355" successor="SQ00357" msgKind="sync"/>
+    <CommStep description="complete" id="CS00076" predecessor="SQ00359" successor="SQ00362" msgKind="reply"/>
+    <Start id="BG00011" target="CS00074">
+      <ClosedWorkload arrivalProcess="poissonPDF" externalDelay="1.44E7" population="1"/>
+    </Start>
+    <End id="FN00011" source="ST00070"/>
+    <Sequence id="SQ00353" source="CS00074" target="ST00068"/>
+    <Sequence id="SQ00355" source="ST00068" target="CS00075"/>
+    <Sequence id="SQ00357" source="CS00075" target="ST00069"/>
+    <Sequence id="SQ00359" source="ST00069" target="CS00076"/>
+    <Sequence id="SQ00362" source="CS00076" target="ST00070"/>
+  </Scenario>
+  <Component id="CM00000" name="user" multiplicity="10000" host="PR00000"/>
+  <Component id="CM00001" name="webserver" multiplicity="10" host="PR00001"/>
+  <Component id="CM00002" name="reportgenerator" multiplicity="5" host="PR00001"/>
+  <Component id="CM00003" name="statscollector" multiplicity="1" host="PR00002"/>
+  <Component id="CM00004" name="jobscollector" multiplicity="1" host="PR00002"/>
+  <Component id="CM00005" name="employer" multiplicity="100" host="PR00000"/>
+  <Component id="CM00006" name="authenticator" multiplicity="1" host="PR00002"/>
+  <Component id="CM00007" name="deptjobbank" multiplicity="1" host="PR00003"/>
+  <Component id="CM00008" name="externaljobs1" multiplicity="1" host="PR00003"/>
+  <Component id="CM00009" name="validator" multiplicity="1" host="PR00002"/>
+  <Component id="CM00010" name="externaljobs2" multiplicity="1" host="PR00003"/>
+  <ProcessingResource id="PR00000" name="ExternalNode" multiplicity="1" speedFactor="1.0"/>
+  <ProcessingResource id="PR00001" name="WebNode" multiplicity="1" speedFactor="5.0"/>
+  <ProcessingResource id="PR00002" name="DatabaseNode" multiplicity="1" speedFactor="10.0"/>
+  <ProcessingResource id="PR00003" name="ExternalDataNode" multiplicity="1" speedFactor="1.0"/>
+</CSM:CSM>
